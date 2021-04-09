@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "moduleResolution": "node",
+        "target": "es6",
+        "outDir": "reactOut",
+        "lib": [
+            "es6",
+            "dom"
+        ],
+        /* "jsx": react -> vwichtig, um Output aus .tsx-Dateien zu js "richtig" mit React zu übersetzen?*/
+        "jsx": "react",
+        "sourceMap": true,
+        "rootDir": "..",
+        "strict": true   /* enable all strict type-checking options */
+        /* Additional Checks */
+        // "noUnusedLocals": true,
+        // "noImplicitReturns": true,
+        // "noFallthroughCasesInSwitch": true,
+        /* Experimental feature */
+        // "experimentalDecorators": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

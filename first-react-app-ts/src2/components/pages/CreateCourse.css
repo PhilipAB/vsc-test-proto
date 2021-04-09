@@ -1,0 +1,38 @@
+.create-container {
+  padding-bottom: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+  background-color: var(--vscode-menu-background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: start;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  font-size: 15pt;
+}
+  
+.create-header {
+  margin-bottom: 10px;
+  color: var(--vscode-sidebar-title);
+}
+
+.input {
+  background-color: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border-color: var(--vscode-input-background);
+  border-radius: 2px;
+}
+
+.course-input {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.input::placeholder {
+  color: var(--vscode-input-border);
+}

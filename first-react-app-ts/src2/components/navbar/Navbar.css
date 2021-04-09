@@ -1,0 +1,195 @@
+nav ul { 
+	/* Remove the dots from listed items */
+	list-style-type: none;
+}
+.navbar {
+	/* Direction left to right. Important if language settings are set to right to left language.  */
+	direction: ltr;
+	/* Navbar height. */
+    height: 80px;
+	/* Navbar background color. */
+	background-color: var(--vscode-activityBar-background);
+	/* Navbar's text color. */
+	color: var(--vscode-activityBar-inactiveForeground);
+	/* Define navbar as flexbox. */
+	display: flex;
+	/* Align (flex) items centered on cross axis. */
+	align-items: center;
+	/* Align (flex) items at the start of main axis. */
+	justify-content: flex-start;
+	/* Set font size to 12pt (= 16px) */
+	font-size: 12pt;
+	/* Slightly rounded corners. */
+	border-radius: 2px;
+}
+
+.navbar-oppsee {
+	/* Oppsee Header color. */
+    color: var(--vscode-activityBar-inactiveForeground);
+    margin-left: 20px;
+	/* Set font size to 15pt (= 20px) */
+	font-size: 15pt;
+}
+
+@media only screen and (max-width: 272px) {
+	.navbar-oppsee {
+		/* To ensure a smooth transition between the static and responsive header, the vw value must be set to exactly 7.35294118 */
+		/* Formula: vw-value = 100 * px-value / window.innerWidth; e.g. to get 20px: vw = 100 * 20 / window.innerWidth */
+		/* Unit vw is dependent on the viewport width */
+		font-size: 7.35294118vw;
+	}
+
+	.App-logo {
+		/* To prevent the app logo to shrink to a height/width of 0px, we need to set a minimum for both values.
+		Can be omitted if shrinking for menu icon is enabled. */
+		min-height: 8.82352941176vw;
+		min-width: 8.82352941176vw;
+	}
+}
+
+.App-logo {
+	/* Oppsee logo color. */
+	fill: var(--vscode-activityBar-inactiveForeground);
+    margin-left: 10px;
+	margin-right: auto;
+	width: 24px;
+	height: 24px;
+}
+
+.nav-menu {
+	/* Display menu as a grid (for screens over 500px width). */
+    display: grid;
+	/* Include 2 columns. */
+    grid-template-columns: repeat(2, auto);
+	/* Gap between columns. */
+    gap: 10px;
+    text-align: center;
+    width: 70vw;
+	/* Align items at the end of main axis. */
+    justify-content: end;
+    margin-right: 2rem; 
+  }
+
+  .nav-item {
+	/* Display items inline, next to each other. */
+	display: inline-flex;
+	margin-right: 20px;
+}
+
+.nav-link {
+	color: var(--vscode-activityBar-inactiveForeground);
+}
+
+.nav-link:hover {
+	color: var(--vscode-activityBar-foreground);
+	transition: 500ms;
+	transition-timing-function: ease-in-out;
+}
+
+.navbar-icon {
+	display: none;
+}
+
+.nav-button {
+	color: var(--vscode-button-foreground);
+	background-color: var(--vscode-button-background);
+	text-align: center;
+	padding: 5px 10px;
+	border-radius: 2px;
+}
+
+.open-new {
+	width: 12px;
+	height: 12px;
+	fill: var(--vscode-button-foreground);
+}
+
+.nav-button:hover {
+	background-color: var(--vscode-button-hoverBackground);
+}
+
+.course-overview {
+	align-self: center;
+}
+
+@media only screen and (max-width: 700px) {
+	.navbar {
+		position: relative;
+	}
+
+	.navbar-menu {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-right: 0px;
+		position: absolute;
+		text-align: center;
+		width: 100%;
+		height: 500px;
+		top: 80px;
+		transform: translate(-200px, 0) scale(0);
+		padding-top: 30px;
+		padding-bottom: 30px;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	.navbar-menu.active {
+		background: var(--vscode-menu-background);
+		transform: translate(0, 0) scale(1);
+		transition-timing-function: ease-in;
+		transition: 500ms;
+		z-index: 1;
+	}
+
+	.App-logo {
+		margin-right: 10px;
+	}
+
+	.nav-item {
+		margin-right: 0px;
+		text-align: center;
+		margin-bottom: 30px;
+		width: 100%;
+		display: table;
+	}
+
+	.nav-link {
+		color: var(--vscode-menu-foreground);
+	}
+
+	.nav-link:hover {
+		color: var(--vscode-menu-selectionForeground);
+		background-color: var(--vscode-menu-selectionBackground);
+	}
+
+	.navbar-icon {
+		display: block;
+		margin-left: auto;
+		margin-right: 20px;
+	}
+
+	.menu-icon {
+		display: block;
+		margin-left: auto;
+		margin-right: 20px;
+		fill: var(--vscode-activityBar-inactiveForeground);
+		width: 24px;
+		height: 24px;
+		/* Since the menu icon is important to navigate through the pages, 
+		we likely do not want it to shrink. Therefore, we set flex shrink to zero. 
+		To enable responsiveness for the menu icon, remove the following line or set flex-shrink to 1 (default). */
+		flex-shrink: 0;
+	}
+
+	.menu-icon:hover {
+		fill: var(--vscode-activityBar-foreground);
+	}
+
+	.nav-button{
+		width: 80%;
+		max-width: 200px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+}

@@ -1,0 +1,31 @@
+.card {
+  box-shadow: 0 -10px 20px 0 rgba(0, 0, 0, 0.8); /* this adds the "card" effect */
+  width: 80%;
+  padding: 10px;
+  text-align: center;
+  background-color: var(--vscode-list-inactiveSelectionBackground);
+  color: var(--vscode-list-inactiveSelectionForeground);
+  margin-bottom: 10px;
+  border-radius: 2px;
+  transition-timing-function: ease-out;
+	transition: 500ms;
+}
+
+.open-in-new {
+	width: 12px;
+	height: 12px;
+	fill: var(--vscode-list-inactiveSelectionForeground);
+}
+
+.card:hover {
+  background-color: var(--vscode-list-activeSelectionBackground);
+  color: var(--vscode-list-activeSelectionForeground);
+  cursor: pointer;
+  margin-left: 10px;
+  transition-timing-function: ease-in;
+	transition: 500ms;
+}
+
+.card:hover .open-in-new {
+  fill: var(--vscode-list-activeSelectionForeground);
+}
