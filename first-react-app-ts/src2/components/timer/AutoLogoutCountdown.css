@@ -1,0 +1,19 @@
+.logout-timer {
+    display: none;
+}
+
+.logout-timer.active {
+    display: inline-flex;
+	margin-right: 20px;
+	font-size: 15pt;
+}
+
+@media only screen and (max-width: 368px) {
+	.logout-timer.active {
+		/* To ensure a smooth transition between the static and responsive header, the vw value must be set to exactly 7.35294118 */
+		/* Formula: vw-value = 100 * px-value / window.innerWidth; e.g. to get 20px: vw = 100 * 20 / window.innerWidth */
+		/* Unit vw is dependent on the viewport width */
+		font-size: 5.4347826087vw;
+		margin-right: 5.4347826087vw;
+	}
+}

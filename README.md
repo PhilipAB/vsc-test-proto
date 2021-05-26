@@ -161,6 +161,22 @@ A set of all commits with a brief description in this project
 
 Initial commit. Basic setup of a typescript react app running in a VS Code extension. 
 
+### Commit 2 – C2
+
+Updated README.md: Fixed some relative links. 
+
+### Commit 3 – C3
+
+Updated README.md: Improved explanation on how to start the extension.
+
+### Commit 4 – C4
+
+Fixed and closed [issue 1](issues/1) and [issue 2](issues/2).
+
+### Commit 5 – C5
+
+Updated README.md: Extended commit log and removed explanation on how to handle the by now fixed Issues.
+
 ## Known Issues
 
 A set of all known issues in this project.

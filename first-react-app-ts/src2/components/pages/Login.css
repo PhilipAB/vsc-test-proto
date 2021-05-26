@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: var(--vscode-menu-background);
+  width: 100%;
+  height: 100px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 200px;
+}
+
+.nav-button {
+	color: var(--vscode-button-foreground);
+	background-color: var(--vscode-button-background);
+	text-align: center;
+	padding: 5px 10px;
+	border-radius: 2px;
+}

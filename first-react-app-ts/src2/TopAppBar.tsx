@@ -5,7 +5,7 @@ import { MDCFixedTopAppBarFoundation, MDCShortTopAppBarFoundation, MDCTopAppBarF
 
 export interface TopAppBarProps {
     className?: string,
-    style?: any;
+    style?: any,
     alwaysCollapsed?: boolean,
     fixed: boolean,
     prominent: boolean,

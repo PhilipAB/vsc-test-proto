@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: var(--vscode-menu-background);
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+.loading-loop {
+    animation: loading-spinner infinite 4s linear;
+    width: 48px;
+    height: 48px;
+    fill: var(--vscode-activityBar-inactiveForeground);
+}
+
+@keyframes loading-spinner {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -59,7 +59,15 @@ const config = [
     resolve: {
       // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
       // support reading jsx and tsx files for react
-      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+      fallback: {
+        // the following packages are not included in webpack build by default
+        // we need them to decode our jwt
+        "buffer": require.resolve("buffer"),
+        "stream": require.resolve("stream-browserify"),
+        "util": require.resolve("util/"),
+        "crypto": require.resolve("crypto-browserify")
+      }
     },
     module: {
       rules: [
@@ -100,10 +108,13 @@ const config = [
       ]
     },
     plugins: [
-      new webpack.DefinePlugin({
-        // fixes the "process is not defined" error in webpack 5 -> there might be a better solution?
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'process.env.NODE_ENV': JSON.stringify('none')
+      // new webpack.DefinePlugin({
+      //   // fixes the "process is not defined" error in webpack 5 -> there might be a better solution?
+      //   // eslint-disable-next-line @typescript-eslint/naming-convention
+      //   'process.env.NODE_ENV': JSON.stringify('none')
+      // }),
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
       }),
     ],
   }

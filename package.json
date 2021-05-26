@@ -13,7 +13,8 @@
 		"onView:sidebar",
 		"onCommand:vscprototype.helloWorld",
 		"onCommand:vscprototype.askQuestion",
-		"onCommand:vscprototype.protoPanel"
+		"onCommand:vscprototype.protoPanel",
+		"onCommand:vscprototype.authenticate"
 	],
 	"main": "./dist/extension/extension.js",
 	"contributes": {
@@ -52,6 +53,11 @@
 				"command": "vscprototype.protoPanel",
 				"category": "VSC prototype",
 				"title": "Proto Panel"
+			},
+			{
+				"command": "vscprototype.authenticate",
+				"category": "VSC prototype",
+				"title": "Authenticate"
 			}
 		]
 	},
@@ -67,9 +73,13 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
+		"@types/express": "^4.17.11",
 		"@types/glob": "^7.1.3",
+		"@types/jsonwebtoken": "^8.5.1",
 		"@types/mocha": "^8.0.4",
 		"@types/node": "^12.11.7",
+		"@types/node-fetch": "^2.5.10",
+		"@types/polka": "^0.5.2",
 		"@types/vscode": "^1.53.0",
 		"@typescript-eslint/eslint-plugin": "^4.9.0",
 		"@typescript-eslint/parser": "^4.9.0",
@@ -80,6 +90,7 @@
 		"mocha": "^8.1.3",
 		"node-sass": "^5.0.0",
 		"npm-run-all": "^4.1.5",
+		"process": "^0.11.10",
 		"sass-loader": "^11.0.1",
 		"style-loader": "^2.0.0",
 		"svg-url-loader": "^7.1.1",
@@ -98,12 +109,20 @@
 		"@types/react": "^17.0.2",
 		"@types/react-dom": "^17.0.1",
 		"@types/react-router-dom": "^5.1.7",
+		"buffer": "^6.0.3",
 		"classnames": "^2.2.6",
+		"crypto-browserify": "^3.12.0",
+		"express": "^4.17.1",
+		"jsonwebtoken": "^8.5.1",
+		"node-fetch": "^2.6.1",
+		"polka": "^0.5.2",
 		"prop-types": "^15.7.2",
 		"react": "^17.0.1",
 		"react-dom": "^17.0.1",
 		"react-router-dom": "^5.2.0",
 		"save-dev": "0.0.1-security",
+		"stream-browserify": "^3.0.0",
+		"util": "^0.12.3",
 		"web-vitals": "^1.1.0"
 	}
 }

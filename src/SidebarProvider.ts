@@ -1,11 +1,16 @@
 import * as vscode from "vscode";
+import { apiBaseUrl } from "./constants";
 import { getNonce } from "./getNonce";
+import { TokenManager } from "./TokenManager";
+import fetch from "node-fetch";
+import { isAccessToken } from "./isAccessToken";
 
 export class SidebarProvider implements vscode.WebviewViewProvider {
     _view?: vscode.WebviewView;
     _doc?: vscode.TextDocument;
 
-    constructor(private readonly _extensionUri: vscode.Uri) { }
+    constructor(private readonly _extensionUri: vscode.Uri) {
+    }
 
     public resolveWebviewView(webviewView: vscode.WebviewView) {
         this._view = webviewView;
@@ -24,6 +29,11 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
         };
 
         webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
+
+        // Just in case we need to do something if sidebar is opened/closed
+
+        // webviewView.onDidChangeVisibility(() => {
+        // });
 
         webviewView.webview.onDidReceiveMessage(async (data) => {
             switch (data.type) {
@@ -46,6 +56,49 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
                         return;
                     }
                     vscode.commands.executeCommand('vscprototype.' + data.value);
+                    break;
+                }
+                case "getAccessToken": {
+                    webviewView.webview.postMessage({
+                        type: "accessToken",
+                        value: TokenManager.getToken("accessToken")
+                    });
+                    break;
+                }
+                case "refresh": {
+                    const body = { token: TokenManager.getToken("refreshToken") };
+                    const response = await fetch(`${apiBaseUrl}/authenticate/refresh`, {
+                        method: 'POST',
+                        headers: {
+                            // eslint-disable-next-line @typescript-eslint/naming-convention
+                            'Accept': 'application/json',
+                            // eslint-disable-next-line @typescript-eslint/naming-convention
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    }).then(response => response.json());
+                    type ResponseError = { error: string };
+                    type AccessToken = { accessToken: string };
+                    const data: AccessToken | ResponseError = response;
+                    if (isAccessToken(data)) {
+                        const newAccessToken: string = data.accessToken;
+                        TokenManager.setToken("accessToken", newAccessToken);
+                        webviewView.webview.postMessage({
+                            type: "accessToken",
+                            value: newAccessToken
+                        });
+                    } else {
+                        vscode.window.showInformationMessage("Could not refresh session. Please sign back in upon expiration!");
+                    }
+                    break;
+                }
+                case "signOut": {
+                    await TokenManager.setToken("accessToken", "");
+                    await TokenManager.setToken("refreshToken", "");
+                    webviewView.webview.postMessage({
+                        type: "accessToken",
+                        value: TokenManager.getToken("accessToken")
+                    });
                     break;
                 }
             }
@@ -85,7 +138,8 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
                     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
                     <script nonce="${nonce}">
-                        vscode=acquireVsCodeApi();
+                        const vscode = acquireVsCodeApi();
+                        let initialAccessToken = ${JSON.stringify(TokenManager.getToken("accessToken"))};
                     </script>
 			    </head>
                 <body>
