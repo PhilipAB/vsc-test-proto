@@ -25,3 +25,9 @@
     height: 48px;
     fill: var(--vscode-activityBar-inactiveForeground);
 }
+.search {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-bottom: 20px;
+}

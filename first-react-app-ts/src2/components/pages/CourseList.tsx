@@ -17,7 +17,7 @@ export interface CourseListState {
 }
 
 class CourseList extends React.Component<CourseListProps, CourseListState> {
-    // ToDos: Display own courses, filter courses, link to course page, delete courses
+    // ToDos: Filter courses, search bar, link to course page, delete courses
     // How could we link to course page?
     // Answer: Store course page id like access token with Tokenmanager but pass it as a prop instead of state
     // Switch between all courses/my courses -> state property that we use in fetch  

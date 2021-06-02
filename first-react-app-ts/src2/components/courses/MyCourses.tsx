@@ -3,6 +3,7 @@ import { apiBaseUrl } from '../../../constants';
 import { MyCourse } from '../../models/MyCourse';
 import { isMyCourseArray } from '../../predicates/isMyCourseArray';
 import MyCourseCard from '../cards/MyCourseCard';
+import SearchBar from '../searchbar/Searchbar';
 import GoogleLoop from '../svg/GoogleLoop';
 import './AllCourses.css';
 
@@ -12,7 +13,8 @@ export interface MyCoursesProps {
 
 export interface MyCoursesState {
     loading: boolean,
-    courseData: MyCourse[]
+    courseData: MyCourse[],
+    searchTerm: string
 }
 
 export default class MyCourses extends React.Component<MyCoursesProps, MyCoursesState> {
@@ -26,7 +28,8 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
         this.courses = [];
         this.state = {
             loading: true,
-            courseData: []
+            courseData: [],
+            searchTerm: ""
         };
     }
 
@@ -66,30 +69,40 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
         if (this.state.loading) {
             return (<GoogleLoop className="loading"></GoogleLoop>);
         } else if (isMyCourseArray(this.state.courseData)) {
-            let initHidden: boolean[] = [];
-            let initStarred: boolean[] = [];
             return (
                 <div className="card-container">
+                    {/* <div className="search"> */}
+                        <SearchBar searchTerm={this.state.searchTerm} changeFunction={this.handleSearchEdit}></SearchBar>
+                    {/* </div> */}
                     <ul className="course-list">
-                        {this.courses.map((course: MyCourse, i: number) => {
-                            return (
-                                <li className="list-card" key={course.courseId}>
-                                    <MyCourseCard
-                                        id={course.courseId}
-                                        name={course.name}
-                                        accessToken={this.props.accessToken}
-                                        initialHidden={course.hidden}
-                                        initialStarred={course.starred}>
-                                    </MyCourseCard>
-                                </li>
-                            );
-                        })}
+                        {this.courses.filter(course => this.filterCourse(course))
+                            .map((course: MyCourse) => {
+                                return (
+                                    <li className="list-card" key={course.courseId}>
+                                        <MyCourseCard
+                                            id={course.courseId}
+                                            name={course.name}
+                                            accessToken={this.props.accessToken}
+                                            initialHidden={course.hidden}
+                                            initialStarred={course.starred}>
+                                        </MyCourseCard>
+                                    </li>
+                                );
+                            })}
                     </ul>
                 </div>
             );
         } else {
             return "No courses to display!";
         }
+    }
+
+    handleSearchEdit = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({ searchTerm: event.target.value });
+    };
+
+    private filterCourse(course: MyCourse) {
+        return course.name.toLocaleLowerCase().includes(this.state.searchTerm.toLocaleLowerCase());
     }
 
     private checkProperties(data: any[]): boolean {
