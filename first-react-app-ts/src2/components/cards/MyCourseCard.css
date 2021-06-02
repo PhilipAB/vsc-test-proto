@@ -1,0 +1,93 @@
+.my-course-card {
+    box-shadow: 0 -10px 20px 0 rgba(0, 0, 0, 0.8); /* this adds the "card" effect */
+    width: 80%;
+    padding: 10px;
+    text-align: center;
+    background-color: var(--vscode-list-inactiveSelectionBackground);
+    color: var(--vscode-list-inactiveSelectionForeground);
+    margin-bottom: 10px;
+    border-radius: 2px;
+    transition-timing-function: ease-out;
+    transition: 500ms;
+    /* font-size: min(5.4347826087vw, 15pt); */
+}
+  
+.open-my-course-in-new {
+    width: 12px;
+    height: 12px;
+    min-width: 12px;
+    min-height: 12px;
+    fill: var(--vscode-list-inactiveSelectionForeground);
+    margin-left: 10px;
+    margin-right: 10px;
+}
+  
+.my-course-card:hover {
+    background-color: var(--vscode-list-activeSelectionBackground);
+    color: var(--vscode-list-activeSelectionForeground);
+    cursor: pointer;
+    margin-left: 10px;
+    transition-timing-function: ease-in;
+    transition: 500ms;
+}
+  
+.my-course-card:hover .course-name-wrapper .open-my-course-in-new {
+    fill: var(--vscode-list-activeSelectionForeground);
+}
+.course-props-wrapper {
+    display: inline-flex;
+    height: 100%;
+    min-width: 0px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+input[type="checkbox"] {
+    display: none;
+}
+.course-props-wrapper .option {
+    color: var(--vscode-button-foreground);
+	background-color: var(--vscode-button-background);
+    height: 24px;
+    width: 24px;
+    min-width: 12px;
+    min-height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0 10px;
+    transition: all 0.3s ease;
+}
+.course-props-wrapper .option.hidden {
+    margin-right: 10px;
+}
+.course-props-wrapper .option:hover {
+    background-color: var(--vscode-button-hoverBackground);
+}
+input:checked:checked + label {
+    border: 5px solid var(--vscode-focusBorder);
+    background: var(--vscode-button-background);
+}
+input:checked:checked + label .hide,
+input:checked:checked + label .star {
+    fill: var(--vscode-button-foreground);
+}
+.course-props-wrapper .option .star,
+.course-props-wrapper .option .hide
+ {
+    display: flex;
+    fill: var(--vscode-list-inactiveSelectionForeground);
+    width: 12px;
+    height: 12px;
+    min-width: 12px;
+    min-height: 12px;
+}
+.course-name-wrapper {
+    display: inline-flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}

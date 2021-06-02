@@ -47,7 +47,6 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                     role: data.role
                 }
             }));
-
     }
 
     render() {

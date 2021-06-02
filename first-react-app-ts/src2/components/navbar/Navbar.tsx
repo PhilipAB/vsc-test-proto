@@ -58,7 +58,7 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/courselist" onClick={this.handleClick}>Course List</Link>
+                                <Link className="nav-link" to={`/courselist/${this.state.accessToken}`} onClick={this.handleClick}>Course List</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/createcourse" onClick={this.handleClick}>Create Course</Link>

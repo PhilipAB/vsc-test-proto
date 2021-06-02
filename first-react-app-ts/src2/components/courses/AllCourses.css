@@ -1,0 +1,50 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+}
+
+.course-list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.page-numbers {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.page-number {
+    display: flex;
+    margin-right: 10px;
+    justify-content: center;
+    flex-direction: row;
+    color: var(--vscode-activityBar-inactiveForeground);
+    cursor: pointer;
+}
+
+.page-number:hover {
+	color: var(--vscode-activityBar-foreground);
+	transition: 500ms;
+	transition-timing-function: ease-in-out;
+}
+
+.list-card {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loading {
+    animation: loading-spinner infinite 4s linear;
+    width: 48px;
+    height: 48px;
+    fill: var(--vscode-activityBar-inactiveForeground);
+}

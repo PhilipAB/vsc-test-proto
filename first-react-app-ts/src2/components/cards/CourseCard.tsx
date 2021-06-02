@@ -1,10 +1,10 @@
 import * as React from "react";
 import OpenInNew from "../svg/OpenInNew";
-import './ListCard.css';
+import './CourseCard.css';
 
 // Stateless (functional) React components should be named in PascalCase
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const ListCard = (props: { name: string }) => {
+const CourseCard = (props: { name: string }) => {
     return (
         <div className="card">
             {props.name} <OpenInNew className="open-in-new"/>
@@ -12,6 +12,6 @@ const ListCard = (props: { name: string }) => {
     );
 };
 
-export default ListCard;
+export default CourseCard;
 
 

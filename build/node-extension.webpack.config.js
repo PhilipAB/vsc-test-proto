@@ -81,16 +81,13 @@ const config = [
           ]
         },
         {
-          test: /\.(scss|css)$/,
+          test: /\.css$/,
           use: [
             {
               loader: "style-loader"
             },
             {
               loader: "css-loader"
-            },
-            {
-              loader: "sass-loader"
             }
           ]
         },
