@@ -1,6 +1,7 @@
 import * as React from "react";
 import { withRouter } from "react-router";
 import { RouteComponentProps } from "react-router";
+import { apiBaseUrl } from "../../../constants";
 import { User } from "../../models/User";
 import { isUser } from "../../predicates/isUser";
 import GoogleLoop from "../svg/GoogleLoop";
@@ -30,7 +31,6 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
     }
 
     async componentDidMount() {
-        const apiBaseUrl: string = "http://localhost:3000";
         await fetch(`${apiBaseUrl}/users/profile`, {
             method: 'GET',
             headers: {

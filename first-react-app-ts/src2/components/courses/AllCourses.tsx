@@ -1,4 +1,5 @@
 import React from 'react';
+import { apiBaseUrl } from '../../../constants';
 import { snakeToCamelCase } from '../../helpers/snakeToCamelCase';
 import { Course } from '../../models/Course';
 import { isNonEmptyCourseArray } from '../../predicates/isCourseArray';
@@ -35,7 +36,6 @@ export default class AllCourses extends React.Component<AllCoursesProps, AllCour
     }
 
     async componentDidMount() {
-        const apiBaseUrl: string = "http://localhost:3000";
         await fetch(`${apiBaseUrl}/courses`, {
             method: 'GET',
             // Auth header not required yet to fetch courses from api. 
