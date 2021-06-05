@@ -14,9 +14,9 @@ export default class App extends React.Component {
       <div className="App">
         <BrowserRouter>
           <Navbar />
-          <Route exact path="/profile/:accessToken" component={Profile} />
+          <Route path="/profile/:loading/:role?/:name?" component={Profile} />
           <Route exact path="/courselist/:accessToken" component={CourseList} />
-          <Route exact path="/createcourse" component={CreateCourse} />
+          <Route exact path="/createcourse/:accessToken" component={CreateCourse} />
           <Route exact path="/login" component={Login} />
         </BrowserRouter>
       </div>

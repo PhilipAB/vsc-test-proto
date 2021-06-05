@@ -9,22 +9,27 @@ import './Navbar.css';
 import AutoLogoutCountdown from '../timer/AutoLogoutCountdown';
 import GoogleRefresh from '../svg/GoogleRefresh';
 import GooglePerson from '../svg/GooglePerson';
+import { User } from '../../models/User';
+import { apiBaseUrl } from '../../../constants';
+import { isUser } from '../../predicates/isUser';
 
 export interface NavbarProps {
 }
 
 export interface NavbarState {
     active: boolean,
-    accessToken: string
+    accessToken: string,
+    profileLoading: boolean,
+    profileData?: User
 }
 
 export default class Navbar extends React.Component<NavbarProps, NavbarState> {
     constructor(props: NavbarProps) {
         super(props);
-        this.state = { active: false, accessToken: initialAccessToken };
+        this.state = { active: false, accessToken: initialAccessToken, profileLoading: true };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         window.addEventListener("message", async (event) => {
             const message = event.data;
             switch (message.type) {
@@ -34,9 +39,59 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                     });
             }
         });
+        if (this.isAuthenticated()) {
+            await fetch(`${apiBaseUrl}/users/profile`, {
+                method: 'GET',
+                headers: {
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    'Authorization': `Bearer ${this.state.accessToken}`
+                }
+            }).then(response => response.json())
+                .then(data => this.setState({
+                    profileLoading: false,
+                    profileData: {
+                        id: data.id,
+                        providerId: data.provider_id,
+                        name: data.name,
+                        role: data.role
+                    }
+                }));
+        }
+    }
+
+    async componentDidUpdate() {
+        // When we sign in -> set profile data if it is not set yet.
+        // Else if we sign out -> wipe out profile data. 
+        if (!this.state.profileData && this.isAuthenticated()) {
+            await fetch(`${apiBaseUrl}/users/profile`, {
+                method: 'GET',
+                headers: {
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    'Authorization': `Bearer ${this.state.accessToken}`
+                }
+            }).then(response => response.json())
+                .then(data => this.setState({
+                    profileLoading: false,
+                    profileData: {
+                        id: data.id,
+                        providerId: data.provider_id,
+                        name: data.name,
+                        role: data.role
+                    }
+                }));
+        } else if (this.state.profileData && !this.isAuthenticated()) {
+            this.setState({
+                profileData: undefined
+            });
+        }
     }
 
     render() {
+        let profileParams: string = this.state.profileLoading.toString();
+        console.log("profileData", this.state.profileData);
+        if (isUser(this.state.profileData)) {
+            profileParams = `${profileParams}/${this.state.profileData.role}/${this.state.profileData.name}`;
+        }
         return (
             <nav className='navbar'>
                 <h1 className="navbar-oppsee">HAW-OPPSEE</h1>
@@ -53,15 +108,15 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                         <ul className={this.state.active ? 'navbar-menu active' : 'navbar-menu'}>
                             <li className="nav-item">
                                 {/* Link to profile */}
-                                <Link to={`/profile/${this.state.accessToken}`} onClick={this.handleClick}>
+                                <Link to={`/profile/${profileParams}`} onClick={this.handleClick}>
                                     <GooglePerson className="nav-profile"></GooglePerson>
                                 </Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to={`/courselist/${this.state.accessToken}`} onClick={this.handleClick}>Course List</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/createcourse" onClick={this.handleClick}>Create Course</Link>
+                            <li className={this.state.profileData && this.state.profileData.role === "Lecturer" ? "nav-item" : "nav-item no-permission"}>
+                                <Link className="nav-link" to={`/createCourse/${this.state.accessToken}`} onClick={this.handleClick}>Create Course</Link>
                             </li>
                             <li className="nav-item">
                                 <button className="nav-button" type="button" onClick={this.handleButtonClick}>
@@ -79,7 +134,7 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                                 </button>
                             </li>
                         </ul>
-                        <Redirect to={`/profile/${this.state.accessToken}`} push={true} />
+                        <Redirect to={`/profile/${profileParams}`} push={true} />
                     </div>
                 ) : (
                     <Redirect to="/login" push={true} />

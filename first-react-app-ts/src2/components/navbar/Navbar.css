@@ -119,6 +119,10 @@ nav ul {
 	grid-row: row1 / row-end;
 }
 
+.nav-item.no-permission {
+	visibility: hidden;
+}
+
 .nav-link {
 	color: var(--vscode-activityBar-inactiveForeground);
 }
@@ -215,6 +219,11 @@ nav ul {
 		margin-bottom: 30px;
 		width: 100%;
 		display: table;
+	}
+
+	.nav-item.no-permission {
+		visibility: visible;
+		display: none;
 	}
 
 	.nav-link {

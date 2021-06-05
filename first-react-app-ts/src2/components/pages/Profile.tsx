@@ -9,66 +9,43 @@ import './Profile.css';
 
 // Param(s) via link to profile. Accessible in 'this.props.match.params.*'
 export interface PathParams {
-    accessToken: string
+    accessToken: string,
+    loading: string,
+    name?: string,
+    role?: "Student" | "Lecturer"
 }
 
 export interface ProfileProps extends RouteComponentProps<PathParams> {
 }
 
 export interface ProfileState {
-    loading: boolean,
-    data: User | { error: string }
 }
 
 class Profile extends React.Component<ProfileProps, ProfileState> {
     constructor(props: ProfileProps) {
         super(props);
-
-        this.state = {
-            loading: true,
-            data: { error: "User not defined!" },
-        };
-    }
-
-    async componentDidMount() {
-        await fetch(`${apiBaseUrl}/users/profile`, {
-            method: 'GET',
-            headers: {
-                // eslint-disable-next-line @typescript-eslint/naming-convention
-                'Authorization': `Bearer ${this.props.match.params.accessToken}`
-            }
-        }).then(response => response.json())
-            .then(data => this.setState({
-                loading: false,
-                data: {
-                    id: data.id,
-                    providerId: data.provider_id,
-                    name: data.name,
-                    role: data.role
-                }
-            }));
     }
 
     render() {
+        const isLoading: boolean = Boolean(JSON.parse(this.props.match.params.loading));
         return (
-            <div className="container">
-                {this.state.loading ?
+            <div className="profile-container">
+                {isLoading ?
                     (<GoogleLoop className="loading-loop"></GoogleLoop>)
                     : (
-                        isUser(this.state.data) ?
-                            (
-                                <div className="profile">
-                                    <p>
-                                        Hello {this.state.data.name}!
+                        // User should always have a role. Name may be undefined (e. g. not required on GitHub)
+                        this.props.match.params.role ? (
+                            <>
+                                <p>
+                                    Hello {this.props.match.params.name}!
                                     </p>
-                                    <p>
-                                        Your role: {this.state.data.role}
-                                    </p>
-                                </div>
-                            ) :
-                            (
-                                "No profile data available!"
-                            )
+                                <p>
+                                    Your role: {this.props.match.params.role}
+                                </p>
+                            </>
+                        ) : (
+                            "No profile data available!"
+                        )
                     )}
             </div>
         );

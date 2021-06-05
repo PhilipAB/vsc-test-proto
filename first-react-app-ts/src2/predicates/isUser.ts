@@ -1,6 +1,6 @@
 import { User } from "../models/User";
 
-export function isUser(data: User | { error: string }): data is User {
+export function isUser(data?: User): data is User {
     return (
         data ?
             data.hasOwnProperty('id') &&
