@@ -41,7 +41,7 @@
     align-items: center;
     justify-content: space-evenly;
 }
-input[type="checkbox"] {
+.course-props-wrapper input[type="checkbox"] {
     display: none;
 }
 .course-props-wrapper .option {
@@ -65,12 +65,12 @@ input[type="checkbox"] {
 .course-props-wrapper .option:hover {
     background-color: var(--vscode-button-hoverBackground);
 }
-input:checked:checked + label {
+.course-props-wrapper input:checked:checked + label {
     border: 5px solid var(--vscode-focusBorder);
     background: var(--vscode-button-background);
 }
-input:checked:checked + label .hide,
-input:checked:checked + label .star {
+.course-props-wrapper input:checked:checked + label .hide,
+.course-props-wrapper input:checked:checked + label .star {
     fill: var(--vscode-button-foreground);
 }
 .course-props-wrapper .option .star,

@@ -1,8 +1,10 @@
 .search-bar {
-    display: flex;
+    display: inline-flex;
     color: var(--vscode-input-foreground);
     background-color: var(--vscode-input-background);
     border: var(--vscode-input-border);
     width: 90% !important;
     margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }

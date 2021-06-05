@@ -5,7 +5,7 @@ export function isJwtPayloadWithExp(payload: null | { [key: string]: any } | str
         payload ? 
         payload.hasOwnProperty('userId') &&
         payload.hasOwnProperty('iat') &&
-        payload.hasOwnProperty('iat')
+        payload.hasOwnProperty('exp')
         : false
     );
 }

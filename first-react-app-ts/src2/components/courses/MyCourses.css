@@ -5,6 +5,13 @@
     width: 100%;
 }
 
+.filter-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
 .course-list {
     width: 100%;
     display: flex;
@@ -24,10 +31,4 @@
     width: 48px;
     height: 48px;
     fill: var(--vscode-activityBar-inactiveForeground);
-}
-.search {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin-bottom: 20px;
 }
