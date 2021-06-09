@@ -88,7 +88,6 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
 
     render() {
         let profileParams: string = this.state.profileLoading.toString();
-        console.log("profileData", this.state.profileData);
         if (isUser(this.state.profileData)) {
             profileParams = `${profileParams}/${this.state.profileData.role}/${this.state.profileData.name}`;
         }
@@ -134,7 +133,16 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                                 </button>
                             </li>
                         </ul>
-                        <Redirect to={`/profile/${profileParams}`} push={true} />
+                        {isSideBar ? (
+                            <Redirect to={`/profile/${profileParams}`} push={true} />
+                        ) : (
+                            Number(initCourseId) !== -1 ? (
+                                // FixMe: (remove) This case can not occur with the current implementation
+                                <Redirect to={`/course`} push={true} />
+                            ) : (
+                                <Redirect to={`/courselist/${this.state.accessToken}`} push={true} />
+                            )
+                        )}
                     </div>
                 ) : (
                     <Redirect to="/login" push={true} />

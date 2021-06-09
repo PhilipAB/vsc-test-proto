@@ -3,6 +3,8 @@ declare const vscode: {
 };
 
 declare const initialAccessToken: string;
+declare const isSideBar: boolean;
+declare const initCourseId: string;
 
 declare module "*.svg" {
   const content: any;

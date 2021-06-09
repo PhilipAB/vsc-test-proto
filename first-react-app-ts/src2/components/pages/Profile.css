@@ -10,18 +10,3 @@
     padding-left: 10px;
     padding-right: 10px;
   }
-.loading-loop {
-    animation: loading-spinner infinite 4s linear;
-    width: 48px;
-    height: 48px;
-    fill: var(--vscode-activityBar-inactiveForeground);
-}
-
-@keyframes loading-spinner {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}

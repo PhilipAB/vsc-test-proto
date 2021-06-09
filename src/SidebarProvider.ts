@@ -101,6 +101,14 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
                     });
                     break;
                 }
+                case "openCourseInNewTab": {
+                    if (!data.value) {
+                        return;
+                    }
+                    await TokenManager.setCourseId(data.value);
+                    vscode.commands.executeCommand('vscprototype.protoPanel');
+                    break;
+                }
             }
         });
     }
@@ -135,11 +143,11 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 				    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 				    <link href="${styleResetUri}" rel="stylesheet">
 				    <link href="${styleVSCodeUri}" rel="stylesheet">
-                    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
                     <script nonce="${nonce}">
                         const vscode = acquireVsCodeApi();
-                        let initialAccessToken = ${JSON.stringify(TokenManager.getToken("accessToken"))};
+                        const initialAccessToken = ${JSON.stringify(TokenManager.getToken("accessToken"))};
+                        const isSideBar = true;
                     </script>
 			    </head>
                 <body>

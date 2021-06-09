@@ -7,6 +7,7 @@ import CourseList from '../pages/CourseList';
 import CreateCourse from '../pages/CreateCourse';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
+import Course from '../pages/Course';
 
 export default class App extends React.Component {
   render() {
@@ -15,6 +16,7 @@ export default class App extends React.Component {
         <BrowserRouter>
           <Navbar />
           <Route path="/profile/:loading/:role?/:name?" component={Profile} />
+          <Route path="/course/:accessToken/:id/:name/:role?" component={Course} />
           <Route exact path="/courselist/:accessToken" component={CourseList} />
           <Route exact path="/createcourse/:accessToken" component={CreateCourse} />
           <Route exact path="/login" component={Login} />

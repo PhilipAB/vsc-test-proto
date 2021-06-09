@@ -25,7 +25,7 @@ export interface MyCoursesState {
 }
 
 export default class MyCourses extends React.Component<MyCoursesProps, MyCoursesState> {
-    // ToDos: Display own courses, filter courses, sort courses, link to course page, delete courses
+    // ToDos: (Delete courses), create Assignments (from existing Assignments), change course roles, submit assignments 
     // How could we link to course page?
     // Answer: Store course page id like access token with Tokenmanager but pass it as a prop instead of state
     // Switch between all courses/my courses -> state property that we use in fetch  
@@ -46,8 +46,6 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
     async componentDidMount() {
         await fetch(`${apiBaseUrl}/courses/myCourses`, {
             method: 'GET',
-            // Auth header not required yet to fetch courses from api. 
-            // Still included to prevent errors in case of future api updates.    
             headers: {
                 // eslint-disable-next-line @typescript-eslint/naming-convention
                 'Authorization': `Bearer ${this.props.accessToken}`
@@ -104,9 +102,10 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
                             .map((course: MyCourse, i: number) => {
                                 return (
                                     <li className="list-card" key={course.courseId}>
-                                        <MyCourseCard
+                                        <MyCourseCard 
                                             id={course.courseId}
                                             name={course.name}
+                                            role={course.role}
                                             accessToken={this.props.accessToken}
                                             hidden={course.hidden}
                                             starred={course.starred}

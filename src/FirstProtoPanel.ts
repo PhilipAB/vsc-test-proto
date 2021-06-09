@@ -1,5 +1,9 @@
 import * as vscode from "vscode";
+import { apiBaseUrl } from "./constants";
 import { getNonce } from "./getNonce";
+import { isAccessToken } from "./isAccessToken";
+import { TokenManager } from "./TokenManager";
+import fetch from "node-fetch";
 
 export class FirstProtoPanel {
   /**
@@ -37,8 +41,8 @@ export class FirstProtoPanel {
         // And restrict the webview to only loading content from our extension's `media` directory.
         localResourceRoots: [
           vscode.Uri.joinPath(extensionUri, "media"),
-          vscode.Uri.joinPath(extensionUri, "dist/react")
-        ],
+          vscode.Uri.joinPath(extensionUri, "dist/sidebar")
+        ]
       }
     );
 
@@ -64,19 +68,6 @@ export class FirstProtoPanel {
     // Listen for when the panel is disposed
     // This happens when the user closes the panel or when the panel is closed programatically
     this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
-
-    // // Handle messages from the webview
-    // this._panel.webview.onDidReceiveMessage(
-    //   (message) => {
-    //     switch (message.command) {
-    //       case "alert":
-    //         vscode.window.showErrorMessage(message.text);
-    //         return;
-    //     }
-    //   },
-    //   null,
-    //   this._disposables
-    // );
   }
 
   public dispose() {
@@ -113,24 +104,71 @@ export class FirstProtoPanel {
           vscode.window.showErrorMessage(data.value);
           break;
         }
-        // case "tokens": {
-        //   await Util.globalState.update(accessTokenKey, data.accessToken);
-        //   await Util.globalState.update(refreshTokenKey, data.refreshToken);
-        //   break;
-        // }
+        case "executeCommand": {
+          if (!data.value) {
+            return;
+          }
+          vscode.commands.executeCommand('vscprototype.' + data.value);
+          break;
+        }
+        case "getAccessToken": {
+          webview.postMessage({
+            type: "accessToken",
+            value: TokenManager.getToken("accessToken")
+          });
+          break;
+        }
+        case "refresh": {
+          const body = { token: TokenManager.getToken("refreshToken") };
+          const response = await fetch(`${apiBaseUrl}/authenticate/refresh`, {
+            method: 'POST',
+            headers: {
+              // eslint-disable-next-line @typescript-eslint/naming-convention
+              'Accept': 'application/json',
+              // eslint-disable-next-line @typescript-eslint/naming-convention
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+          }).then(response => response.json());
+          type ResponseError = { error: string };
+          type AccessToken = { accessToken: string };
+          const data: AccessToken | ResponseError = response;
+          if (isAccessToken(data)) {
+            const newAccessToken: string = data.accessToken;
+            TokenManager.setToken("accessToken", newAccessToken);
+            webview.postMessage({
+              type: "accessToken",
+              value: newAccessToken
+            });
+          } else {
+            vscode.window.showInformationMessage("Could not refresh session. Please sign back in upon expiration!");
+          }
+          break;
+        }
+        case "signOut": {
+          await TokenManager.setToken("accessToken", "");
+          await TokenManager.setToken("refreshToken", "");
+          webview.postMessage({
+            type: "accessToken",
+            value: TokenManager.getToken("accessToken")
+          });
+          break;
+        }
+        case "setCourseId": {
+          if (!data.value) {
+            return;
+          }
+          await TokenManager.setCourseId(data.value);
+          break;
+        }
       }
     });
   }
 
   private _getHtmlForWebview(webview: vscode.Webview) {
-    // And the uri we use to load this script in the webview
-    const scriptUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "media", "main.js")
-    );
 
-    // And the uri we use to load this script in the webview
     const reactAppUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "dist/react", "react.js") //.with({ scheme: "vscode-resource" })
+      vscode.Uri.joinPath(this._extensionUri, "dist/sidebar", "sidebar.js")
     );
 
     // Local path to css styles
@@ -140,10 +178,6 @@ export class FirstProtoPanel {
     const stylesMainUri = webview.asWebviewUri(
       vscode.Uri.joinPath(this._extensionUri, "media", "vscode.css")
     );
-
-    // const cssUri = webview.asWebviewUri(
-    //   vscode.Uri.joinPath(this._extensionUri, "out", "compiled/swiper.css")
-    // );
 
     // Use a nonce to only allow specific scripts to be run
     const nonce = getNonce();
@@ -162,6 +196,9 @@ export class FirstProtoPanel {
         <link href="${stylesMainUri}" rel="stylesheet">
         <script nonce="${nonce}">
           vscode=acquireVsCodeApi();
+          const initialAccessToken = ${JSON.stringify(TokenManager.getToken("accessToken"))};
+          const isSideBar = false;
+          const initCourseId = ${JSON.stringify(TokenManager.getCourseId())};
         </script>
 			</head>
       <body>

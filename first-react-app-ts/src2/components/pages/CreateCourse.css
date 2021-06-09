@@ -20,7 +20,7 @@
   color: var(--vscode-sidebar-title);
 }
 
-.input {
+.course-input .input {
   background-color: var(--vscode-input-background);
   color: var(--vscode-input-foreground);
   border-color: var(--vscode-input-background);
