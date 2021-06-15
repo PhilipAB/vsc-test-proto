@@ -1,6 +1,11 @@
 export interface User {
     id: number,
-    providerId: number,
     name: string,
     role: "Student" | "Lecturer"
+}
+
+export interface UserCourseRole {
+    id: number,
+    name: string,
+    role: "Student" | "Teacher" | "CourseAdmin"
 }

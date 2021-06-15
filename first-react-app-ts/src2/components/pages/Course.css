@@ -29,6 +29,6 @@
     margin-right: 10px;
     margin-bottom: 10px;
 }
-.course-signup-button {
+.course-signup-button, .participants-button {
     max-width: 200px;
 }

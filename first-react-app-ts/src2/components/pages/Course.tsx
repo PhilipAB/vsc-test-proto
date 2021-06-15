@@ -2,7 +2,10 @@ import React from "react";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router";
 import { apiBaseUrl } from "../../../constants";
+import { UserCourseRole } from "../../models/User";
+import { isUserArray } from "../../predicates/isUserArray";
 import GoogleLoop from "../svg/GoogleLoop";
+import { UserTable } from "../user-table/UserTable";
 import './Course.css';
 
 export interface PathParams {
@@ -16,8 +19,10 @@ export interface CourseProps extends RouteComponentProps<PathParams> {
 }
 
 export interface CourseState {
-    loading: boolean;
-    authorized: boolean;
+    loading: boolean
+    authorized: boolean
+    userData: UserCourseRole[]
+    showUserData: boolean
 }
 
 class Course extends React.Component<CourseProps, CourseState> {
@@ -29,7 +34,9 @@ class Course extends React.Component<CourseProps, CourseState> {
         super(props);
         this.state = {
             loading: false,
-            authorized: false
+            authorized: false,
+            userData: [],
+            showUserData: false
         };
         this.id = Number(this.props.match.params.id);
         this.name = this.props.match.params.name;
@@ -77,6 +84,28 @@ class Course extends React.Component<CourseProps, CourseState> {
         }
     }
 
+    isTeacherOrAdmin = () => {
+        return this.role === "CourseAdmin" || this.role === "Teacher";
+    };
+
+    renderCoursePage = () => {
+        if (this.isTeacherOrAdmin()) {
+            if (this.state.showUserData && this.state.userData.length > 0) {
+                return (
+                    <>
+                        <button className="participants-button" onClick={this.onClickUserDataButton}>Hide participants</button>
+                        <UserTable userArray={this.state.userData} courseId={this.id} accessToken={this.props.match.params.accessToken}></UserTable>
+                    </>
+                );
+            } else {
+                return <button className="participants-button" onClick={this.onClickUserDataButton}>Show participants</button>;
+            }
+        } else {
+            return <></>;
+        }
+
+    };
+
     render() {
         return (
             <div className="course-detail-container">
@@ -84,7 +113,7 @@ class Course extends React.Component<CourseProps, CourseState> {
                 {this.state.loading ? (
                     <GoogleLoop className="loading-loop"></GoogleLoop>
                 ) : (this.state.authorized ? (
-                    `You can access course data! Your role is ${this.role}`
+                    this.renderCoursePage()
                 ) : (
                     <form>
                         <div className="course-password">
@@ -126,6 +155,33 @@ class Course extends React.Component<CourseProps, CourseState> {
                 }
             });
         }
+    };
+
+    onClickUserDataButton = async () => {
+        if (!this.state.showUserData) {
+            await fetch(`${apiBaseUrl}/courses/course/${this.id.toString()}/users`, {
+                method: 'GET',
+                headers: {
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    'Authorization': `Bearer ${this.props.match.params.accessToken}`,
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    if (isUserArray(data)) {
+                        this.setState({
+                            userData: data,
+                            showUserData: true
+                        });
+                    } else {
+                        vscode.postMessage({ type: "onInfo", value: "Unable to show participants!" });
+                    }
+                });
+        } else {
+            this.setState({
+                showUserData: false
+            });
+        }
+
     };
 
     onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {

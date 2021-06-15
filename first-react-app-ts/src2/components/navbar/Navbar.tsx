@@ -51,7 +51,6 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                     profileLoading: false,
                     profileData: {
                         id: data.id,
-                        providerId: data.provider_id,
                         name: data.name,
                         role: data.role
                     }
@@ -74,7 +73,6 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                     profileLoading: false,
                     profileData: {
                         id: data.id,
-                        providerId: data.provider_id,
                         name: data.name,
                         role: data.role
                     }
