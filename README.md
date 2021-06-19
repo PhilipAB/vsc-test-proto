@@ -54,15 +54,7 @@ Now you can delete the following folders and files within your **React** project
 
 The dependencies are now automatically loaded from the extension's node_modules folder within the root directory.
 
-To recognize the .svg file within [App.tsx](first-react-app-ts/src/App.tsx) refactor the react-app-env.d.ts file to custom.d.ts and replace the code with the following lines to declare a basic .svg module:
-```
-declare module "*.svg" {
-    const content: any;
-    export default content;
-}
-```
-
-Create a new folder in your root directory called **extension**. In this folder create a new file called **ProtoPanel.ts**. Move your extension's src directory into the newly created folder **extension**.
+Create a new folder in your root directory called **extension**. Move your extension's src directory into the newly created folder **extension**. In this folder create a new file called **CoursePanel.ts**.
 
 Install some dev-dependencies (loaders) for webpack:
 
@@ -71,8 +63,8 @@ Install some dev-dependencies (loaders) for webpack:
 `npm install --save-dev svg-url-loader`
 
 Apply the following configuration files to configure Webpack and Typescript for the Visual Studio Code extension and React:
-* [tsconfig.json file within your React project](first-react-app-ts/tsconfig.json)
-* [tsconfig.json file within your extension project](tsconfig.json)
+* [tsconfig.json file within your React project](app/tsconfig.json)
+* [tsconfig.json file within your extension project](extension/tsconfig.json)
 * [node-extension.webpack.config.js file to bundle the react and extension project](build/node-extension.webpack.config.js) (seperately)
 
 Make sure to change the primary entry point "**main**" in your [package.json](package.json) to:
@@ -81,9 +73,9 @@ Make sure to change the primary entry point "**main**" in your [package.json](pa
 
 Then we create a new folder media inside the root directory, and there we create the two files reset.css and vscode.css. We can copy the source code for these files from a [sample project](https://github.com/microsoft/vscode-extension-samples/tree/main/webview-sample/media) for VS Code Extensions from Microsoft. The css files are useful to adapt the webviews to the style of VS Code. 
 
-The [ProtoPanel.ts](src/FirstProtoPanel.ts) file is also largely derived from this project and adapted to our needs. The use of content and the management of webviews is implemented exemplarily in the [extension.js](https://github.com/microsoft/vscode-extension-samples/blob/main/webview-sample/src/extension.ts) file. We use this code in our newly created file and not in extension.ts, because our project was created object-oriented with Typescript. The focus is therefore also on breaking down the source code logically into classes. Thereby the task of our [extension.ts](src/extension.ts) file is mainly the registration and administration of commands for VS Code extension execution.
+The [CoursePanel.ts](extension/src/CoursePanel.ts) file is also largely derived from this project and adapted to our needs. The use of content and the management of webviews is implemented exemplarily in the [extension.js](https://github.com/microsoft/vscode-extension-samples/blob/main/webview-sample/src/extension.ts) file. We use this code in our newly created file and not in extension.ts, because our project was created object-oriented with Typescript. The focus is therefore also on breaking down the source code logically into classes. Thereby the task of our [extension.ts](extension/src/extension.ts) file is mainly the registration and administration of commands for VS Code extension execution.
 
-When transferring the source code from the [ProtoPanel.ts](src/FirstProtoPanel.ts) file, you may probably notice that there is still an error here. To fix this issue, we need to create another class called **getNonce.ts** in the extension folder. For this we use the following code:
+When transferring the source code from the [CoursePanel.ts](extension/src/CoursePanel.ts) file, you may probably notice that there is still an error here. To fix this issue, we need to create another class called **getNonce.ts** in the extension/src folder. For this we use the following code:
 ```
 export function getNonce() {
 	let text = '';
@@ -96,37 +88,24 @@ export function getNonce() {
 ```
 This class does nothing but generate us a random 32 character string that can be used as a nonce attribute in html. This is useful to whitelist our script and style files.
 
-In order to display our React app in the webview, we first have to modify the extension.ts file accordingly. To do this, we first need to import the ProtoPanel into our extension.ts:
+In order to display our React app in the webview, we first have to modify the extension.ts file accordingly. To do this, we first need to import the CoursePanel into our extension.ts:
 
-`import { FirstProtoPanel } from './FirstProtoPanel';`
+`import { CoursePanel } from './CoursePanel';`
 
-Then we rename the command from *vscprototype.helloWorld* to *vscprototype.protoPanel*. Now, instead of displaying the information message, we replace the code and create our ProtoPanel:\
+Then we rename the command from *vscprototype.helloWorld* to *vscprototype.coursePanel*. Now, instead of displaying the information message, we replace the code and create our CoursePanel:\
 ~~`vscode.window.showInformationMessage('Hello World from VSCPrototype!');`~~\
-`ProtoPanel.createOrShow(context.extensionUri);`
+`CoursePanel.createOrShow(context.extensionUri);`
 
 In order for our command to be recognized, it must be configured in the **package.json**. Under activationEvents replace\
 ~~`onCommand:vscprototype.helloWorld`~~\
 by\
-`onCommand:vscprototype.protoPanel`.
+`onCommand:vscprototype.coursePanel`.
 
-In the Commands section, replace the command\
-~~`vscprototype.helloWorld`~~\
-by\
-`vscprototype.protoPanel`,\
-\
-replace the title\
-~~`Hello World`~~\
-by\
-`Proto Panel`\
-\
-and add the following line:\
-`"category": "VSC prototype"`
+In the Commands section, remove the command entirely. Doing so, it can only be used internally. 
 
 Finally go to your .eslintrc.json file and add the following line:\
 `"ignorePatterns": ["dist/**/*.js"]`\
 to ignore linting within generated files.
-
-Press f5 to debug your VS Code extension. For some reason the generation of **dist/react.js** might fail. To solve this, restart Visual Studio Code and press f5 again. 
 
 ## Features
 

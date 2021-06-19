@@ -13,7 +13,7 @@
 		"onView:sidebar",
 		"onCommand:vscprototype.helloWorld",
 		"onCommand:vscprototype.askQuestion",
-		"onCommand:vscprototype.protoPanel",
+		"onCommand:vscprototype.coursePanel",
 		"onCommand:vscprototype.authenticate"
 	],
 	"main": "./dist/extension/extension.js",
@@ -68,11 +68,6 @@
 				"command": "vscprototype.askQuestion",
 				"category": "VSC prototype",
 				"title": "Ask Question"
-			},
-			{
-				"command": "vscprototype.protoPanel",
-				"category": "VSC prototype",
-				"title": "Proto Panel"
 			},
 			{
 				"command": "vscprototype.authenticate",
@@ -146,5 +141,7 @@
 		"stream-browserify": "^3.0.0",
 		"util": "^0.12.3",
 		"web-vitals": "^1.1.0"
-	}
+	},
+	"extensionDependencies": [
+	]
 }
