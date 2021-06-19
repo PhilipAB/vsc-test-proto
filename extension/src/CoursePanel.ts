@@ -101,13 +101,6 @@ export class CoursePanel {
           vscode.window.showErrorMessage(data.value);
           break;
         }
-        case "executeCommand": {
-          if (!data.value) {
-            return;
-          }
-          vscode.commands.executeCommand('vscprototype.' + data.value);
-          break;
-        }
       }
     });
   }
@@ -144,7 +137,6 @@ export class CoursePanel {
         <script nonce="${nonce}">
           vscode=acquireVsCodeApi();
           const initialAccessToken = ${JSON.stringify(TokenManager.getToken("accessToken"))};
-          const isSideBar = false;
           const initCourseId = ${JSON.stringify(TokenManager.getCourseId())};
           const courseName = ${JSON.stringify(TokenManager.getCourseProp("courseName"))};
           const courseUserRole = ${JSON.stringify(TokenManager.getCourseProp("courseUserRole"))};

@@ -89,7 +89,7 @@ nav ul {
 	/* Include 2 rows. */
 	grid-template-rows: [row1] 50% [row2] 50% [row-end];
 	grid-template-areas: 
-	"profile link1 button1"
+	"profile link1 link3" /* ToDo: Add Assignments link*/
     "profile link2 button2";
 	grid-auto-flow: column;
 	/* Gap between columns. */

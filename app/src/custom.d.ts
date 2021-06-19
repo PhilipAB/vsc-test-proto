@@ -3,7 +3,6 @@ declare const vscode: {
 };
 
 declare const initialAccessToken: string;
-declare const isSideBar: boolean;
 declare const initCourseId: string;
 declare const courseName: string;
 declare const courseUserRole: "Student" | "Teacher" | "CourseAdmin" | "";

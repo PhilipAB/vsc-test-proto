@@ -116,14 +116,6 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                                 <Link className="nav-link" to={`/createCourse/${this.state.accessToken}`} onClick={this.handleClick}>Create Course</Link>
                             </li>
                             <li className="nav-item">
-                                <button className="nav-button" type="button" onClick={this.handleButtonClick}>
-                                    <span className="nav-button-text">
-                                        Course Overview&nbsp;
-                                    </span>
-                                    <CodiconsLinkExternal className="open-new" />
-                                </button>
-                            </li>
-                            <li className="nav-item">
                                 <button className="nav-button" type="button" onClick={this.signOut}>
                                     <span className="nav-button-text">
                                         Sign out
@@ -131,16 +123,7 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                                 </button>
                             </li>
                         </ul>
-                        {isSideBar ? (
-                            <Redirect to={`/profile/${profileParams}`} push={true} />
-                        ) : (
-                            Number(initCourseId) !== -1 ? (
-                                // FixMe: (remove) This case can not occur with the current implementation
-                                <Redirect to={`/course`} push={true} />
-                            ) : (
-                                <Redirect to={`/courselist/${this.state.accessToken}`} push={true} />
-                            )
-                        )}
+                        <Redirect to={`/profile/${profileParams}`} push={true} />
                     </div>
                 ) : (
                     <Redirect to="/login" push={true} />
@@ -151,9 +134,6 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
 
     handleClick = () => {
         this.setState({ active: !this.state.active });
-    };
-    handleButtonClick = () => {
-        vscode.postMessage({ type: 'executeCommand', value: 'coursePanel' });
     };
     isAuthenticated = () => {
         return this.state.accessToken ? true : false;

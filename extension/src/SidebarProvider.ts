@@ -160,7 +160,6 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
                     <script nonce="${nonce}">
                         const vscode = acquireVsCodeApi();
                         const initialAccessToken = ${JSON.stringify(TokenManager.getToken("accessToken"))};
-                        const isSideBar = true;
                     </script>
 			    </head>
                 <body>

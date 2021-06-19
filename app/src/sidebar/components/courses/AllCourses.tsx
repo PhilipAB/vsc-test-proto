@@ -62,7 +62,7 @@ export default class AllCourses extends React.Component<AllCoursesProps, AllCour
     }
 
     render() {
-        if(this.state.loading) {
+        if (this.state.loading) {
             return (<CodiconsSync className="loading"></CodiconsSync>);
         } else if (isNonEmptyCourseArray(this.state.courseData)) {
             // Logic for displaying courses
@@ -81,7 +81,7 @@ export default class AllCourses extends React.Component<AllCoursesProps, AllCour
                         {currentCourses.map((course: Course) => {
                             return (
                                 <li className="list-card" key={course.id}>
-                                    <CourseCard id={course.id} name={course.name} accessToken={this.props.accessToken} ></CourseCard>
+                                    <CourseCard id={course.id} name={course.name} ></CourseCard>
                                 </li>
                             );
                         })}

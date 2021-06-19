@@ -1,5 +1,4 @@
-import * as React from "react";
-import { Redirect } from "react-router-dom";
+import React from "react";
 import CodiconsCircleSlash from "../../../svg/CodiconsCircleSlash";
 import CodiconsStarFull from "../../../svg/CodiconsStarFull";
 import CodiconsLinkExternal from "../../../svg/CodiconsLinkExternal";
@@ -9,7 +8,6 @@ export interface MyCourseCardProps {
     id: number,
     name: string,
     role: "CourseAdmin" | "Teacher" | "Student",
-    accessToken: string,
     hidden: boolean,
     starred: boolean,
     handleHidden: (event: React.ChangeEvent<HTMLInputElement>) => void,
@@ -17,21 +15,15 @@ export interface MyCourseCardProps {
 }
 
 export interface MyCourseCardState {
-    redirectToCourse: boolean
 }
 
 export default class MyCourseCard extends React.Component<MyCourseCardProps, MyCourseCardState> {
     constructor(props: MyCourseCardProps) {
         super(props);
-        this.state = {
-            redirectToCourse: false
-        };
     }
 
     render() {
-        return this.state.redirectToCourse ? (
-            <Redirect to={`/course/${this.props.accessToken}/${this.props.id.toString()}/${this.props.name}/${this.props.role}`} push={true} />
-        ) : (
+        return (
             <div className="my-course-card" onClick={this.handleCourseCardClick}>
                 <span className="course-name-wrapper">
                     {this.props.name} <CodiconsLinkExternal className="open-my-course-in-new" />
@@ -63,7 +55,7 @@ export default class MyCourseCard extends React.Component<MyCourseCardProps, MyC
     handleCourseCardClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (event.currentTarget.className === "course-props-wrapper") {
             event.stopPropagation();
-        } else if (isSideBar) {
+        } else {
             vscode.postMessage(
                 {
                     type: "openCourseInNewTab",
@@ -73,8 +65,6 @@ export default class MyCourseCard extends React.Component<MyCourseCardProps, MyC
                         role: this.props.role
                     }
                 });
-        } else {
-            this.setState({ redirectToCourse: true });
         }
     };
 };

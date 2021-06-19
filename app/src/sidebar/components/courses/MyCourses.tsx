@@ -106,7 +106,6 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
                                             id={course.courseId}
                                             name={course.name}
                                             role={course.role}
-                                            accessToken={this.props.accessToken}
                                             hidden={course.hidden}
                                             starred={course.starred}
                                             handleHidden={this.handleHidden}
