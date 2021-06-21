@@ -21,6 +21,7 @@
 .filter-menu.active {
     position: absolute;
     display: flex;
+    flex-direction: column;
     background: var(--vscode-menu-background);
     right: 0px;
     top: 24px;
@@ -31,4 +32,12 @@
     margin-top: 10px;
     margin-right: 10px;
     border-radius: 2px;
+}
+.filter-option {
+    flex-direction: row;
+    display: flex;
+}
+.filter-label {
+    margin-right: 10px;
+    margin-bottom: 10px;
 }

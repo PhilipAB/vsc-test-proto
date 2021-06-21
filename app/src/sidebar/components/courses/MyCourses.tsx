@@ -20,6 +20,7 @@ export interface MyCoursesState {
     filterActive: boolean,
     showHidden: boolean,
     showStarred: boolean,
+    showNonHighlighted: boolean,
     sortMenuActive: boolean,
     alphabetical: boolean,
     sortByCreation: boolean,
@@ -40,6 +41,7 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
             filterActive: false,
             showHidden: false,
             showStarred: true,
+            showNonHighlighted: true,
             sortMenuActive: false,
             alphabetical: false,
             sortByCreation: true,
@@ -102,8 +104,10 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
                             showFilterMenu={this.state.filterActive}
                             showHidden={this.state.showHidden}
                             showStarred={this.state.showStarred}
+                            showNonHighlighted={this.state.showNonHighlighted}
                             handleShowHidden={this.handleShowHidden}
                             handleShowStarred={this.handleShowStarred}
+                            handleShowNonHighlighted={this.handleShowNonHighlighted}
                             handleFilterButtonClick={this.handleFilterButtonClicked}>
                         </Filter>
                     </div>
@@ -217,6 +221,12 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
         }));
     };
 
+    handleShowNonHighlighted = () => {
+        this.setState((prevState: MyCoursesState) => ({
+            showNonHighlighted: !prevState.showNonHighlighted
+        }));
+    };
+
     handleFilterButtonClicked = () => {
         // Close sort menu if filter menu is opened to prevent overlapping on small screens
         if (!this.state.filterActive && this.state.sortMenuActive) {
@@ -289,6 +299,9 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
         }
         if (!this.state.showStarred) {
             showCourse = showCourse && !course.starred;
+        }
+        if (!this.state.showNonHighlighted) {
+            showCourse = showCourse && (course.starred || course.hidden);
         }
         return showCourse;
     }
