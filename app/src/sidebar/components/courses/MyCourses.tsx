@@ -21,6 +21,7 @@ export interface MyCoursesState {
     showHidden: boolean,
     showStarred: boolean,
     showNonHighlighted: boolean,
+    showManagedCourses: boolean,
     sortMenuActive: boolean,
     alphabetical: boolean,
     sortByCreation: boolean,
@@ -42,6 +43,7 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
             showHidden: false,
             showStarred: true,
             showNonHighlighted: true,
+            showManagedCourses: true,
             sortMenuActive: false,
             alphabetical: false,
             sortByCreation: true,
@@ -105,9 +107,11 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
                             showHidden={this.state.showHidden}
                             showStarred={this.state.showStarred}
                             showNonHighlighted={this.state.showNonHighlighted}
+                            showManaged={this.state.showManagedCourses}
                             handleShowHidden={this.handleShowHidden}
                             handleShowStarred={this.handleShowStarred}
                             handleShowNonHighlighted={this.handleShowNonHighlighted}
+                            handleShowManaged={this.handleShowManagedCourses}
                             handleFilterButtonClick={this.handleFilterButtonClicked}>
                         </Filter>
                     </div>
@@ -227,6 +231,12 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
         }));
     };
 
+    handleShowManagedCourses = () => {
+        this.setState((prevState: MyCoursesState) => ({
+            showManagedCourses: !prevState.showManagedCourses
+        }));
+    };
+
     handleFilterButtonClicked = () => {
         // Close sort menu if filter menu is opened to prevent overlapping on small screens
         if (!this.state.filterActive && this.state.sortMenuActive) {
@@ -302,6 +312,9 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
         }
         if (!this.state.showNonHighlighted) {
             showCourse = showCourse && (course.starred || course.hidden);
+        }
+        if(!this.state.showManagedCourses) {
+            showCourse = showCourse && !(course.role === "Teacher" || course.role === "CourseAdmin");
         }
         return showCourse;
     }

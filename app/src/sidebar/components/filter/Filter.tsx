@@ -7,9 +7,11 @@ export interface FilterProps {
     showHidden: boolean,
     showStarred: boolean,
     showNonHighlighted: boolean,
+    showManaged: boolean,
     handleShowHidden: () => void,
     handleShowStarred: () => void,
     handleShowNonHighlighted: () => void,
+    handleShowManaged: () => void,
     handleFilterButtonClick: () => void
 }
 
@@ -41,6 +43,12 @@ class Filter extends React.Component<FilterProps, FilterState> {
                             Show nonhighlighted courses
                         </label>
                         <input type="checkbox" name="non-highlighted" id="show-non-highlighted" onChange={this.props.handleShowNonHighlighted} checked={this.props.showNonHighlighted} />
+                    </div>
+                    <div className="filter-option">
+                        <label className="filter-label" htmlFor="show-managed">
+                            Show managed courses
+                        </label>
+                        <input type="checkbox" name="managed" id="show-managed" onChange={this.props.handleShowManaged} checked={this.props.showManaged} />
                     </div>
                 </div>
             </div>
