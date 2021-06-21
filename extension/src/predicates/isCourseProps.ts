@@ -5,7 +5,8 @@ export function isCourseProps(value: any): value is CourseProps {
         value ?
             value.hasOwnProperty('id') &&
             value.hasOwnProperty('name') &&
-            value.hasOwnProperty('role')
+            value.hasOwnProperty('role') &&
+            value.hasOwnProperty('description')
             : false
     );
 }

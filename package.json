@@ -14,7 +14,8 @@
 		"onCommand:vscprototype.helloWorld",
 		"onCommand:vscprototype.askQuestion",
 		"onCommand:vscprototype.coursePanel",
-		"onCommand:vscprototype.authenticate"
+		"onCommand:vscprototype.authenticate",
+		"onCommand:vscprototype.refresh"
 	],
 	"main": "./dist/extension/extension.js",
 	"contributes": {
@@ -73,6 +74,11 @@
 				"command": "vscprototype.authenticate",
 				"category": "VSC prototype",
 				"title": "Authenticate"
+			},
+			{
+				"command": "vscprototype.refresh",
+				"category": "VSC prototype",
+				"title": "Refresh"
 			}
 		]
 	},
@@ -142,6 +148,5 @@
 		"util": "^0.12.3",
 		"web-vitals": "^1.1.0"
 	},
-	"extensionDependencies": [
-	]
+	"extensionDependencies": []
 }

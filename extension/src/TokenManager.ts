@@ -11,11 +11,11 @@ export class TokenManager {
     return this.globalState.get<number>("courseId", -1);
   }
 
-  static setCourseProp(propKey: "courseName" | "courseUserRole", propValue: string) {
+  static setCourseProp(propKey: "courseName" | "courseUserRole" | "courseDescription", propValue: string) {
     return this.globalState.update(propKey, propValue);
   }
 
-  static getCourseProp(propKey: "courseName" | "courseUserRole"): string {
+  static getCourseProp(propKey: "courseName" | "courseUserRole" | "courseDescription"): string {
     return this.globalState.get<string>(propKey, "");
   }
 

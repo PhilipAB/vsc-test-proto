@@ -81,7 +81,7 @@ export default class AllCourses extends React.Component<AllCoursesProps, AllCour
                         {currentCourses.map((course: Course) => {
                             return (
                                 <li className="list-card" key={course.id}>
-                                    <CourseCard id={course.id} name={course.name} ></CourseCard>
+                                    <CourseCard id={course.id} name={course.name} description={course.description} ></CourseCard>
                                 </li>
                             );
                         })}

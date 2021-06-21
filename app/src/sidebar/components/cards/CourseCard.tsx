@@ -3,8 +3,9 @@ import CodiconsLinkExternal from "../../../svg/CodiconsLinkExternal";
 import './CourseCard.css';
 
 export interface CourseCardProps {
-    id: number,
+    id: number
     name: string
+    description: string
 }
 
 export interface CourseCardState {
@@ -30,7 +31,8 @@ export default class CourseCard extends React.Component<CourseCardProps, CourseC
                 value: {
                     id: this.props.id,
                     name: this.props.name,
-                    role: ""
+                    role: "",
+                    description: this.props.description
                 }
             });
     };

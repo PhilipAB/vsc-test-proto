@@ -119,6 +119,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
                     await TokenManager.setCourseId(courseProps.id);
                     await TokenManager.setCourseProp("courseName", courseProps.name);
                     await TokenManager.setCourseProp("courseUserRole", courseProps.role);
+                    await TokenManager.setCourseProp("courseDescription", courseProps.description);
                     vscode.commands.executeCommand('vscprototype.coursePanel');
                     break;
                 }

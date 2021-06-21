@@ -21,7 +21,9 @@ export interface MyCoursesState {
     showHidden: boolean,
     showStarred: boolean,
     sortMenuActive: boolean,
-    alphabetical: boolean
+    alphabetical: boolean,
+    sortByCreation: boolean,
+    lastVisited: boolean
 }
 
 export default class MyCourses extends React.Component<MyCoursesProps, MyCoursesState> {
@@ -39,7 +41,9 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
             showHidden: false,
             showStarred: true,
             sortMenuActive: false,
-            alphabetical: false
+            alphabetical: false,
+            sortByCreation: true,
+            lastVisited: false
         };
     }
 
@@ -60,7 +64,9 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
                             name: myCourse.name,
                             hidden: Boolean(myCourse.hidden).valueOf(),
                             starred: Boolean(myCourse.starred).valueOf(),
-                            role: myCourse.role
+                            role: myCourse.role,
+                            description: myCourse.description,
+                            visited: new Date(myCourse.visited)
                         };
                         tempCourses.push(tempCourse);
                     });
@@ -84,7 +90,11 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
                         <Sort
                             showSortMenu={this.state.sortMenuActive}
                             alphabetize={this.state.alphabetical}
+                            sortByTimeOfCreation={this.state.sortByCreation}
+                            lastVisited={this.state.lastVisited}
                             handleAlphabetize={this.handleAlphabetize}
+                            handleSortByTimeOfCreation={this.handleSortByCreation}
+                            handleLastVisited={this.handleSortByLastVisited}
                             handleSortButtonClick={this.handleSortButtonClicked}>
                         </Sort>
                         <SearchBar searchTerm={this.state.searchTerm} changeFunction={this.handleSearchEdit}></SearchBar>
@@ -99,15 +109,16 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
                     </div>
                     <ul className="course-list">
                         {this.state.courseData.filter(course => this.filterCourse(course))
-                            .map((course: MyCourse, i: number) => {
+                            .map((course: MyCourse) => {
                                 return (
                                     <li className="list-card" key={course.courseId}>
-                                        <MyCourseCard 
+                                        <MyCourseCard
                                             id={course.courseId}
                                             name={course.name}
                                             role={course.role}
                                             hidden={course.hidden}
                                             starred={course.starred}
+                                            description={course.description}
                                             handleHidden={this.handleHidden}
                                             handleStarred={this.handleStarred}>
                                         </MyCourseCard>
@@ -208,7 +219,7 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
 
     handleFilterButtonClicked = () => {
         // Close sort menu if filter menu is opened to prevent overlapping on small screens
-        if(!this.state.filterActive && this.state.sortMenuActive) {
+        if (!this.state.filterActive && this.state.sortMenuActive) {
             this.setState((prevState: MyCoursesState) => ({
                 sortMenuActive: !prevState.sortMenuActive
             }));
@@ -219,31 +230,49 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
     };
 
     handleAlphabetize = () => {
-        // If course list was not ordered alphabetically -> sort it alphabetically
-        // Else sort it by course id
-        if(!this.state.alphabetical) {
-            this.setState((prevState: MyCoursesState) => ({
-                courseData: prevState.courseData.sort((a: MyCourse, b: MyCourse) => a.name.localeCompare(b.name))
-            }));
-        } else {
-            this.setState((prevState: MyCoursesState) => ({
-                courseData: prevState.courseData.sort((a: MyCourse, b: MyCourse) => {
-                    if(a.courseId < b.courseId) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                })
-            }));
-        }
         this.setState((prevState: MyCoursesState) => ({
-            alphabetical: !prevState.alphabetical
+            courseData: prevState.courseData.sort((a: MyCourse, b: MyCourse) => a.name.localeCompare(b.name)),
+            alphabetical: true,
+            sortByCreation: false,
+            lastVisited: false,
+        }));
+    };
+
+    handleSortByCreation = () => {
+        this.setState((prevState: MyCoursesState) => ({
+            courseData: prevState.courseData.sort((a: MyCourse, b: MyCourse) => {
+                if (a.courseId < b.courseId) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }),
+            alphabetical: false,
+            sortByCreation: true,
+            lastVisited: false
+        }));
+    };
+    
+    handleSortByLastVisited = () => {
+        this.setState((prevState: MyCoursesState) => ({
+            courseData: prevState.courseData.sort((a: MyCourse, b: MyCourse) => {
+                if (a.visited && !b.visited || a.visited && b.visited && a.visited.getTime() > b.visited.getTime()) {
+                    return -1;
+                } else if(!a.visited && b.visited || a.visited && b.visited && a.visited.getTime() < b.visited.getTime()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }),
+            alphabetical: false,
+            sortByCreation: false,
+            lastVisited: true
         }));
     };
 
     handleSortButtonClicked = () => {
         // Close filter menu if sort menu is opened to prevent overlapping on small screens
-        if(!this.state.sortMenuActive && this.state.filterActive) {
+        if (!this.state.sortMenuActive && this.state.filterActive) {
             this.setState((prevState: MyCoursesState) => ({
                 filterActive: !prevState.filterActive
             }));
@@ -265,10 +294,13 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
     }
 
     private checkProperties(data: any[]): boolean {
+        console.log(data);
         return data[0].hasOwnProperty('course_id') &&
             data[0].hasOwnProperty('name') &&
             data[0].hasOwnProperty('hidden') &&
             data[0].hasOwnProperty('starred') &&
-            data[0].hasOwnProperty('role');
+            data[0].hasOwnProperty('role') &&
+            data[0].hasOwnProperty('description') &&
+            data[0].hasOwnProperty('visited');
     }
 }

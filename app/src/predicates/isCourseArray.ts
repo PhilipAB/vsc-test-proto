@@ -7,7 +7,8 @@ export function isNonEmptyCourseArray(data: any[]): data is Course[] {
         // check if data[0] defines course properties
         data[0].hasOwnProperty('id') &&
         data[0].hasOwnProperty('name') &&
-        data[0].hasOwnProperty('creatorId')
+        data[0].hasOwnProperty('creatorId') &&
+        data[0].hasOwnProperty('description')
         // -> return type is Course[] 
     );
 }

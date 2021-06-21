@@ -140,6 +140,7 @@ export class CoursePanel {
           const initCourseId = ${JSON.stringify(TokenManager.getCourseId())};
           const courseName = ${JSON.stringify(TokenManager.getCourseProp("courseName"))};
           const courseUserRole = ${JSON.stringify(TokenManager.getCourseProp("courseUserRole"))};
+          const courseDescription = ${JSON.stringify(TokenManager.getCourseProp("courseDescription"))};
         </script>
 			</head>
       <body>

@@ -49,6 +49,15 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
+		vscode.commands.registerCommand("vscprototype.refresh", async () => {
+			await vscode.commands.executeCommand("workbench.action.closeSidebar");
+			await vscode.commands.executeCommand(
+				"workbench.view.extension.sidebar-view"
+			);
+		})
+	);
+
+	context.subscriptions.push(
 		vscode.commands.registerCommand('vscprototype.authenticate', () => {
 			authenticate(sidebarProvider._view?.webview);
 		})

@@ -5,12 +5,13 @@ import CodiconsLinkExternal from "../../../svg/CodiconsLinkExternal";
 import './MyCourseCard.css';
 
 export interface MyCourseCardProps {
-    id: number,
-    name: string,
-    role: "CourseAdmin" | "Teacher" | "Student",
-    hidden: boolean,
-    starred: boolean,
-    handleHidden: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    id: number
+    name: string
+    role: "CourseAdmin" | "Teacher" | "Student"
+    hidden: boolean
+    starred: boolean
+    description: string
+    handleHidden: (event: React.ChangeEvent<HTMLInputElement>) => void
     handleStarred: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -62,7 +63,8 @@ export default class MyCourseCard extends React.Component<MyCourseCardProps, MyC
                     value: {
                         id: this.props.id,
                         name: this.props.name,
-                        role: this.props.role
+                        role: this.props.role,
+                        description: this.props.description
                     }
                 });
         }

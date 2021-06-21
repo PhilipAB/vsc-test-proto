@@ -5,7 +5,11 @@ import './Sort.css';
 export interface SortProps {
     showSortMenu: boolean,
     alphabetize: boolean,
+    sortByTimeOfCreation: boolean,
+    lastVisited: boolean,
     handleAlphabetize: () => void,
+    handleSortByTimeOfCreation: () => void,
+    handleLastVisited: () => void,
     handleSortButtonClick: () => void
 }
 
@@ -20,10 +24,24 @@ class Sort extends React.Component<SortProps, SortState> {
                     <CodiconsListOrdered className="sort-icon"></CodiconsListOrdered>
                 </button>
                 <div className={this.props.showSortMenu ? "sort-menu active" : "sort-menu"}>
-                    <label htmlFor="sort-alphabetical">
-                        Alphabetical
-                    </label>
-                    <input type="checkbox" name="sort" id="sort-alphabetical" onChange={this.props.handleAlphabetize} checked={this.props.alphabetize} />
+                    <div className="sort-option">
+                        <label className="sort-label" htmlFor="sort-alphabetical">
+                            Alphabetical
+                        </label>
+                        <input className="sort-input" type="radio" name="sort" id="sort-alphabetical" onChange={this.props.handleAlphabetize} checked={this.props.alphabetize} />
+                    </div>
+                    <div className="sort-option">
+                        <label className="sort-label" htmlFor="sort-by-time-of-creation">
+                            By time of creation
+                        </label>
+                        <input className="sort-input" type="radio" name="sort" id="sort-by-time-of-creation" onChange={this.props.handleSortByTimeOfCreation} checked={this.props.sortByTimeOfCreation} defaultChecked />
+                    </div>
+                    <div className="sort-option">
+                        <label className="sort-label" htmlFor="last-visited">
+                            Last visited
+                        </label>
+                        <input className="sort-input" type="radio" name="sort" id="last-visited" onChange={this.props.handleLastVisited} checked={this.props.lastVisited} />
+                    </div>
                 </div>
             </div>
         );

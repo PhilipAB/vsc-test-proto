@@ -1,5 +1,6 @@
 export interface CourseProps {
-    id: number,
-    name: string,
+    id: number
+    name: string
     role: "Student" | "Teacher" | "CourseAdmin" | ""
+    description: string
 }

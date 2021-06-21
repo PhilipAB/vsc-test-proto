@@ -22,6 +22,7 @@
     position: absolute;
     display: flex;
     background: var(--vscode-menu-background);
+    flex-direction: column;
     left: 0px;
     top: 24px;
     font-size: 9pt; /* = 12px */
@@ -31,4 +32,16 @@
     margin-top: 10px;
     margin-left: 10px;
     border-radius: 2px;
+}
+.sort-option {
+    flex-direction: row;
+    display: flex;
+}
+.sort-label {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.sort-input {
+    /* We need to override the width (of 100%) specified in vscode.css here. */
+    width: auto !important;
 }
