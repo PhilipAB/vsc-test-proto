@@ -152,6 +152,8 @@ class CreateCourse extends React.Component<CreateCourseProps, CreateCourseState>
                             password: "",
                             confirmedPwd: ""
                         });
+                    } else if(response.status === 409) {
+                        vscode.postMessage({ type: 'onInfo', value: `Course with name ${this.state.courseName} already exists!` });
                     } else {
                         vscode.postMessage({ type: 'onInfo', value: `Failed to create course!` });
                     }
