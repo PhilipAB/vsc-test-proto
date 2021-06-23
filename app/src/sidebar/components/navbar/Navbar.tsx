@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CodiconsClose from '../../../svg/CodiconsClose';
 import CodiconsThreeBars from '../../../svg/CodiconsThreeBars';
-import CodiconsLinkExternal from '../../../svg/CodiconsLinkExternal';
 import OppseeComponent from '../../../svg/OppseeLogo';
 import { Redirect } from 'react-router';
 import './Navbar.css';
@@ -12,6 +11,7 @@ import CodiconsAccount from '../../../svg/CodiconsAccount';
 import { User } from '../../../models/User';
 import { apiBaseUrl } from '../../../constants';
 import { isUser } from '../../../predicates/isUser';
+import CodiconsSignOut from '../../../svg/CodiconsSignOut';
 
 export interface NavbarProps {
 }
@@ -115,7 +115,16 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                             <li className={this.state.profileData && this.state.profileData.role === "Lecturer" ? "nav-item" : "nav-item no-permission"}>
                                 <Link className="nav-link" to={`/createCourse/${this.state.accessToken}`} onClick={this.handleClick}>Create Course</Link>
                             </li>
+                            {/* ToDo: Link to Assignments page */}
+                            <li className={this.state.profileData && this.state.profileData.role === "Lecturer" ? "nav-item" : "nav-item no-permission"}>
+                                <Link className="nav-link" to={`/courselist/${this.state.accessToken}`} onClick={this.handleClick}>Assignments</Link>
+                            </li>
+                            {/* ToDo: Link to Create Assignment page */}
+                            <li className={this.state.profileData && this.state.profileData.role === "Lecturer" ? "nav-item" : "nav-item no-permission"}>
+                                <Link className="nav-link" to={`/createCourse/${this.state.accessToken}`} onClick={this.handleClick}>Create Assignment</Link>
+                            </li>
                             <li className="nav-item">
+                                <CodiconsSignOut className="nav-sign-out" onClick={this.signOut}></CodiconsSignOut>
                                 <button className="nav-button" type="button" onClick={this.signOut}>
                                     <span className="nav-button-text">
                                         Sign out

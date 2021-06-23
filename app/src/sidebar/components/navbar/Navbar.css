@@ -85,12 +85,12 @@ nav ul {
     display: grid;
 	/* justify-self: flex-end; */
 	/* Include 3 columns. */
-    grid-template-columns: [first] 20% [second] 40% [third] 40% [column-end];
+    grid-template-columns: [first] 15% [second] 35% [third] 35% [fourth] 15% [column-end];
 	/* Include 2 rows. */
 	grid-template-rows: [row1] 50% [row2] 50% [row-end];
 	grid-template-areas: 
-	"profile link1 link3" /* ToDo: Add Assignments link*/
-    "profile link2 button2";
+	"profile link1 link3 button2" /* ToDo: Add Assignments link*/
+    "profile link2 link4 button2";
 	grid-auto-flow: column;
 	/* Gap between columns. */
     row-gap: 5px;
@@ -119,6 +119,17 @@ nav ul {
 	grid-row: row1 / row-end;
 }
 
+.nav-item:last-child {
+	/* Display items inline, next to each other. */
+	display: inline-flex;
+	margin-right: 20px;
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+	grid-column: fourth / column-end;
+	grid-row: row1 / row-end;
+}
+
 .nav-item.no-permission {
 	visibility: hidden;
 }
@@ -138,25 +149,13 @@ nav ul {
 }
 
 .nav-button {
-	color: var(--vscode-button-foreground);
-	background-color: var(--vscode-button-background);
-	text-align: center;
-	padding: 5px 10px;
-	border-radius: 2px;
+	display: none;
 }
 
 .open-new {
 	width: 12px;
 	height: 12px;
 	fill: var(--vscode-button-foreground);
-}
-
-.nav-button:hover {
-	background-color: var(--vscode-button-hoverBackground);
-}
-
-.nav-button-text {
-	align-self: center;
 }
 
 .nav-profile {
@@ -169,7 +168,17 @@ nav ul {
 	fill: var(--vscode-activityBar-foreground);
 }
 
-@media only screen and (max-width: 620px) {
+.nav-sign-out {
+	fill: var(--vscode-activityBar-inactiveForeground);
+	width: 24px;
+	height: 24px;
+}
+
+.nav-sign-out:hover {
+	fill: var(--vscode-activityBar-foreground);
+}
+
+@media only screen and (max-width: 671px) {
 	.navbar {
 		position: relative;
 	}
@@ -221,6 +230,16 @@ nav ul {
 		display: table;
 	}
 
+	.nav-item:last-child {
+		margin-right: 0px;
+		margin-left: 0px;
+		text-align: center;
+		margin-top: 0px;
+		margin-bottom: 30px;
+		width: 100%;
+		display: table;
+	}
+
 	.nav-item.no-permission {
 		visibility: visible;
 		display: none;
@@ -250,10 +269,29 @@ nav ul {
 	}
 
 	.nav-button{
+		display: flex;
 		width: 80%;
 		max-width: 200px;
-		padding-top: 10px;
-		padding-bottom: 10px;
+		color: var(--vscode-button-foreground);
+		background-color: var(--vscode-button-background);
+		text-align: center;
+		padding: 10px 10px;
+		border-radius: 2px;
+		margin-left: auto;
+		margin-right: auto;
+		justify-content: center;
+	}
+
+	.nav-button:hover {
+		background-color: var(--vscode-button-hoverBackground);
+	}
+	
+	.nav-button-text {
+		align-self: center;
+	}
+
+	.nav-sign-out {
+		display: none;
 	}
 }
 /* css classes for children */
