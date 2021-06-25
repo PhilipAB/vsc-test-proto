@@ -18,8 +18,10 @@ export interface CreateAssignmentState {
 }
 
 class CreateAssignment extends React.Component<CreateAssignmentProps, CreateAssignmentState> {
+    repoIsHttpsUrl: boolean;
     constructor(props: CreateAssignmentProps) {
         super(props);
+        this.repoIsHttpsUrl = false;
         this.state = {
             assignmentName: "",
             repository: "",
@@ -57,6 +59,14 @@ class CreateAssignment extends React.Component<CreateAssignmentProps, CreateAssi
     };
 
     onChangeRepo = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const repo: string = event.currentTarget.value;
+        if(repo && /https:\/\/([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-z]{2,}([\/][^\s]*)*/i.test(repo)) {
+            event.currentTarget.setCustomValidity("");
+            this.repoIsHttpsUrl = true;
+        } else {
+            event.currentTarget.setCustomValidity("Please enter a valid https:// url!");
+            this.repoIsHttpsUrl = false;
+        }
         this.setState({
             repository: event.currentTarget.value
         });
@@ -69,7 +79,7 @@ class CreateAssignment extends React.Component<CreateAssignmentProps, CreateAssi
     };
 
     onClickSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        if (this.state.assignmentName && this.state.repository) {
+        if (this.state.assignmentName && this.repoIsHttpsUrl) {
             // The default behaviour seems to be a redirect to the assignment creation page with the form values as query parameters. 
             // This would result in an error. Therefore, we need to prevent it. 
             event.preventDefault();
