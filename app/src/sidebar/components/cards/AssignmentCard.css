@@ -8,7 +8,8 @@
     margin-bottom: 10px;
     border-radius: 2px;
     transition-timing-function: ease-out;
-      transition: 500ms;
+    transition: 500ms;
+    word-break: break-word;
 }
   
 .assignment-open-in-new {

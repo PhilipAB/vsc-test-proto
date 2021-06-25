@@ -9,6 +9,8 @@
     border-radius: 2px;
     transition-timing-function: ease-out;
     transition: 500ms;
+    word-break: break-word;
+    min-width: 50%;
     /* font-size: min(5.4347826087vw, 15pt); */
 }
   
@@ -84,7 +86,6 @@
     min-height: 12px;
 }
 .course-name-wrapper {
-    display: inline-flex;
     height: 100%;
     align-items: center;
     justify-content: center;

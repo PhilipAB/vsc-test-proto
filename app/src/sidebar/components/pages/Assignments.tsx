@@ -79,7 +79,7 @@ class Assignments extends React.Component<AssignmentsProps, AssignmentsState> {
                     <ul className="assignments-list">
                         {currentAssignments.map((assignment: Assignment) => {
                             return (
-                                <li className="assignmentslist-card" key={assignment.id}>
+                                <li className="assignments-list-card" key={assignment.id}>
                                     <AssignmentCard accessToken={this.props.match.params.accessToken} id={assignment.id} name={assignment.name} repository={assignment.repository} description={assignment.description} ></AssignmentCard>
                                 </li>
                             );

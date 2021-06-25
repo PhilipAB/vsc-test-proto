@@ -9,6 +9,7 @@
   border-radius: 2px;
   transition-timing-function: ease-out;
 	transition: 500ms;
+  word-break: break-word;
 }
 
 .open-in-new {

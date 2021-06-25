@@ -43,6 +43,14 @@ class Course extends React.Component<CourseProps, CourseState> {
         return (
             <div className="assignment-detail-container">
                 <h2 className="assignment-detail-header">{this.name}</h2>
+                <div className="assignment-description-container">
+                    <h3 className="assignment-description-header">Assignment description</h3>
+                    {this.description ? (
+                        <pre>{this.description}</pre>
+                    ) : (
+                        <em>No assignment description available!</em>
+                    )}
+                </div>
                 <button className="clone-assignment-button" onClick={this.onClickClone}>Clone assignment</button>
             </div>
         );
