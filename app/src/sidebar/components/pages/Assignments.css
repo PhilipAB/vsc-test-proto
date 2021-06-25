@@ -1,0 +1,80 @@
+.assignments-container {
+    padding-bottom: 20px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    background-color: var(--vscode-menu-background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    font-size: 15pt;
+}
+  
+.assignments-header {
+    color: var(--vscode-sidebar-title);
+    margin-bottom: 10px;
+}
+
+.assignments-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.assignments-list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.assignments-page-numbers {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+.assignments-page-number:first-child {
+    margin-left: auto; 
+}
+
+.assignments-page-number:last-child {
+    margin-right: auto; 
+}
+
+.assignments-page-number {
+    display: flex;
+    margin-right: 10px;
+    justify-content: center;
+    flex-direction: row;
+    color: var(--vscode-activityBar-inactiveForeground);
+    cursor: pointer;
+}
+
+.assignments-page-number:hover {
+	color: var(--vscode-activityBar-foreground);
+	transition: 500ms;
+	transition-timing-function: ease-in-out;
+}
+
+.assignments-list-card {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.assignments-loading {
+    animation: loading-spinner infinite 4s linear;
+    width: 48px;
+    height: 48px;
+    fill: var(--vscode-activityBar-inactiveForeground);
+}

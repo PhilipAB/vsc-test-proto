@@ -131,9 +131,7 @@ class CreateCourse extends React.Component<CreateCourseProps, CreateCourseState>
             event.preventDefault();
             try {
                 await fetch(`${apiBaseUrl}/courses`, {
-                    method: 'POST',
-                    // Auth header not required yet to fetch courses from api. 
-                    // Still included to prevent errors in case of future api updates.    
+                    method: 'POST',  
                     headers: {
                         // eslint-disable-next-line @typescript-eslint/naming-convention
                         'Authorization': `Bearer ${this.props.match.params.accessToken}`,

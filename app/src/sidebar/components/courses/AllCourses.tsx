@@ -21,10 +21,6 @@ export interface AllCoursesState {
 
 export default class AllCourses extends React.Component<AllCoursesProps, AllCoursesState> {
     coursesPerPage: number;
-    // ToDos: Display own courses, filter courses, link to course page, delete courses
-    // How could we link to course page?
-    // Answer: Store course page id like access token with Tokenmanager but pass it as a prop instead of state
-    // Switch between all courses/my courses -> state property that we use in fetch  
     constructor(props: AllCoursesProps) {
         super(props);
         this.coursesPerPage = 2;

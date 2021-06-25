@@ -33,6 +33,6 @@
   margin-bottom: 10px;
 }
 
-.input::placeholder {
+.course-input .input::placeholder {
   color: var(--vscode-input-border);
 }

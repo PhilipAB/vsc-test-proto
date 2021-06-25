@@ -113,15 +113,13 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                                 <Link className="nav-link" to={`/courselist/${this.state.accessToken}`} onClick={this.handleClick}>Course List</Link>
                             </li>
                             <li className={this.state.profileData && this.state.profileData.role === "Lecturer" ? "nav-item" : "nav-item no-permission"}>
-                                <Link className="nav-link" to={`/createCourse/${this.state.accessToken}`} onClick={this.handleClick}>Create Course</Link>
+                                <Link className="nav-link" to={`/createcourse/${this.state.accessToken}`} onClick={this.handleClick}>Create Course</Link>
                             </li>
-                            {/* ToDo: Link to Assignments page */}
                             <li className={this.state.profileData && this.state.profileData.role === "Lecturer" ? "nav-item" : "nav-item no-permission"}>
-                                <Link className="nav-link" to={`/courselist/${this.state.accessToken}`} onClick={this.handleClick}>Assignments</Link>
+                                <Link className="nav-link" to={`/assignments/${this.state.accessToken}`} onClick={this.handleClick}>Assignments</Link>
                             </li>
-                            {/* ToDo: Link to Create Assignment page */}
                             <li className={this.state.profileData && this.state.profileData.role === "Lecturer" ? "nav-item" : "nav-item no-permission"}>
-                                <Link className="nav-link" to={`/createCourse/${this.state.accessToken}`} onClick={this.handleClick}>Create Assignment</Link>
+                                <Link className="nav-link" to={`/createassignment/${this.state.accessToken}`} onClick={this.handleClick}>Create Assignment</Link>
                             </li>
                             <li className="nav-item">
                                 <CodiconsSignOut className="nav-sign-out" onClick={this.signOut}></CodiconsSignOut>
