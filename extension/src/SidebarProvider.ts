@@ -61,6 +61,13 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
                     vscode.commands.executeCommand('vscprototype.' + data.value);
                     break;
                 }
+                case "cloneRepository": {
+                    if (!data.value) {
+                        return;
+                    }
+                    vscode.commands.executeCommand('git.clone', data.value);
+                    break;
+                }
                 case "getAccessToken": {
                     webviewView.webview.postMessage({
                         type: "accessToken",

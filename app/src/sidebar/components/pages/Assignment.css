@@ -18,3 +18,7 @@
     margin-bottom: 10px;
     color: var(--vscode-sidebar-title);
 }
+
+.clone-assignment-button {
+    max-width: 200px;
+}

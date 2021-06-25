@@ -34,7 +34,7 @@ class Sort extends React.Component<SortProps, SortState> {
                         <label className="sort-label" htmlFor="sort-by-time-of-creation">
                             By time of creation
                         </label>
-                        <input className="sort-input" type="radio" name="sort" id="sort-by-time-of-creation" onChange={this.props.handleSortByTimeOfCreation} checked={this.props.sortByTimeOfCreation} defaultChecked />
+                        <input className="sort-input" type="radio" name="sort" id="sort-by-time-of-creation" onChange={this.props.handleSortByTimeOfCreation} checked={this.props.sortByTimeOfCreation} />
                     </div>
                     <div className="sort-option">
                         <label className="sort-label" htmlFor="last-visited">

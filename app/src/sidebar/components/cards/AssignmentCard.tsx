@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect } from 'react-router';
 import CodiconsLinkExternal from "../../../svg/CodiconsLinkExternal";
 import './AssignmentCard.css';
 
@@ -16,8 +16,10 @@ export interface AssignmentCardState {
 }
 
 export default class AssignmentCard extends React.Component<AssignmentCardProps, AssignmentCardState> {
+    encodedRepo: string;
     constructor(props: AssignmentCardProps) {
         super(props);
+        this.encodedRepo = encodeURIComponent(this.props.repository);
         this.state = {
             redirectToAssignment: false
         };
@@ -25,7 +27,7 @@ export default class AssignmentCard extends React.Component<AssignmentCardProps,
 
     render() {
         return this.state.redirectToAssignment ? (
-            <Redirect to={`/assignment/${this.props.accessToken}/${this.props.id.toString()}/${this.props.name}/${this.props.repository}/${this.props.description}`} push={true} />
+            <Redirect to={`/assignment/${this.props.accessToken}/${this.props.id.toString()}/${this.props.name}/${this.encodedRepo}/${this.props.description}`} push={true} />
         ) : (
             <div className="assignment-card" onClick={this.handleAssignmentCardClick}>
                 {this.props.name} <CodiconsLinkExternal className="assignment-open-in-new" />

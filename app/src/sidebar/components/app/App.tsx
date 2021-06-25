@@ -22,7 +22,7 @@ export default class App extends React.Component {
           <Route exact path="/createcourse/:accessToken" component={CreateCourse} />
           <Route exact path="/assignments/:accessToken" component={Assignments} />
           <Route exact path="/createassignment/:accessToken" component={CreateAssignment} />
-          <Route path="/assignment/:accessToken/:id/:name/:repository/:description" component={Assignment} />
+          <Route exact path="/assignment/:accessToken/:id/:name/:repository/:description" component={Assignment} />
           <Route exact path="/login" component={Login} />
         </BrowserRouter>
       </div>
