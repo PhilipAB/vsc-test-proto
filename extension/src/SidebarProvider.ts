@@ -164,7 +164,6 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 				    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 				    <link href="${styleResetUri}" rel="stylesheet">
 				    <link href="${styleVSCodeUri}" rel="stylesheet">
-                    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
                     <script nonce="${nonce}">
                         const vscode = acquireVsCodeApi();
                         const initialAccessToken = ${JSON.stringify(TokenManager.getToken("accessToken"))};

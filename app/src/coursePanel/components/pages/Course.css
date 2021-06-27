@@ -14,11 +14,17 @@
     z-index: 1;
     font-size: 15pt;
 }
+.course-title-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .course-description-container {
     margin: 10px;
     background-color: var(--vscode-menu-background);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
     text-align: start;
     width: 100%;
@@ -27,8 +33,41 @@
     font-size: 15pt;
 }
 .course-detail-header {
+    display: inline-flex;
+    font-weight: bolder;
+}
+.course-detail-header-editable {
+    display: inline-flex !important;
+    width: auto !important;
+    min-width: 0;
     margin-bottom: 10px;
-    color: var(--vscode-sidebar-title);
+    border: 1px solid var(--vscode-focusBorder) !important;
+}
+.course-edit, .course-check, .course-close {
+    display: none;
+}
+.course-edit.show, .course-check.show, .course-close.show {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    min-width: 12px;
+    min-height: 12px;
+    fill: var(--vscode-activityBar-inactiveForeground);
+    fill: var(--vscode-activityBar-foreground);
+    margin-left: 10px;
+}
+.course-edit.show:hover, .course-check.show:hover, .course-close.show:hover {
+    fill: var(--vscode-activityBar-foreground);
+}
+.course-description-header {
+    display: inline-flex;
+}
+.course-description {
+    margin-bottom: 10px;
+    background-color: var(--vscode-menu-background) !important;
+}
+.course-description.active {
+    border: 2px solid var(--vscode-focusBorder) !important;
 }
 .course-password .input {
     background-color: var(--vscode-input-background);
