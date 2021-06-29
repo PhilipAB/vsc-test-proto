@@ -30,6 +30,44 @@
     height: 100%;
     font-size: 15pt;
 }
-.clone-assignment-button {
+.clone-assignment-button, .related-courses-button {
+    width: 80%;
     max-width: 200px;
+    margin-top: 10px;
+}
+.select-add, .select-update {
+    display: flex;
+	width: 100%;
+    max-width: 200px;
+	border: none;
+    margin-top: 10px;
+	font-family: var(--vscode-font-family);
+	background-color: var(--vscode-input-background);
+}
+.add-container, .update-container {
+    width: 80%;
+    max-width: 200px;
+    margin-top: 10px;
+    border: 1px solid var(--vscode-editor-foreground);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5px;
+}
+.add-form, .update-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.datetime-wrapper {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.cancel-button, .add-button {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
 }
