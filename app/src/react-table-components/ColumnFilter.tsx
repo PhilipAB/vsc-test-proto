@@ -1,6 +1,6 @@
 import React from 'react';
 import { HeaderGroup } from 'react-table';
-import { UserCourseRole } from '../../models/User';
+import { UserCourseRole } from '../models/User';
 
 export interface ColumnFilterProps {
     column: HeaderGroup<UserCourseRole>

@@ -1,0 +1,36 @@
+.course-table-container {
+    padding: 2.5px;
+    border: solid 1px var(--vscode-editor-foreground);
+    margin-top: 10px;
+}
+.empty-course-array, .button-update-related-courses {
+    display: flex;
+    width: 80%;
+    max-width: 200px;
+    margin-top: 10px;
+}
+.button-update-related-courses {
+    display: flex;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 10px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+.pagination-button {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    min-width: 12px;
+    min-height: 12px;
+    margin-top: 10px;
+}
+.table-page-numbers {
+    border: solid 1px var(--vscode-editor-foreground);
+}
+.course-table {
+    margin-left: auto;
+    margin-right: auto;
+}
