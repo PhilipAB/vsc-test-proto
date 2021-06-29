@@ -1,4 +1,5 @@
 import React from "react";
+import autosize from "autosize";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router";
 import { apiBaseUrl } from "../../../constants";
@@ -21,16 +22,25 @@ export interface CreateCourseState {
 class CreateCourse extends React.Component<CreateCourseProps, CreateCourseState> {
     passwordValidated: boolean;
     confirmedPasswordValidated: boolean;
+    descriptionTextArea: HTMLTextAreaElement | null;
     constructor(props: CreateCourseProps) {
         super(props);
         this.passwordValidated = false;
         this.confirmedPasswordValidated = false;
+        this.descriptionTextArea = null;
         this.state = {
             password: "",
             confirmedPwd: "",
             courseName: "",
             courseDescription: ""
         };
+    }
+
+    componentDidMount() {
+        if (this.descriptionTextArea) {
+            this.descriptionTextArea.focus();
+            autosize(this.descriptionTextArea);
+        }
     }
 
     render() {
@@ -44,7 +54,7 @@ class CreateCourse extends React.Component<CreateCourseProps, CreateCourseState>
                     </div>
                     <div className="course-input">
                         <label className="label">Course description</label>
-                        <input className="input" name="courseDescription" placeholder="Course description" onChange={this.onChangeCourseDescription} value={this.state.courseDescription} />
+                        <textarea className="input" ref={this.setTextAreaRef} name="courseDescription" placeholder="Course description" onChange={this.onChangeCourseDescription} value={this.state.courseDescription} />
                     </div>
                     <div className="course-input">
                         <label className="label">Password</label>
@@ -66,7 +76,11 @@ class CreateCourse extends React.Component<CreateCourseProps, CreateCourseState>
         });
     };
 
-    onChangeCourseDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTextAreaRef = (textAreaElement: HTMLTextAreaElement | null) => {
+        this.descriptionTextArea = textAreaElement;
+    };
+
+    onChangeCourseDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         this.setState({
             courseDescription: event.currentTarget.value
         });
