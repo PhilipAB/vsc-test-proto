@@ -1,4 +1,5 @@
 import React from "react";
+import autosize from "autosize";
 import { RouteComponentProps } from "react-router";
 import { withRouter } from "react-router";
 import { apiBaseUrl } from "../../../constants";
@@ -19,14 +20,23 @@ export interface CreateAssignmentState {
 
 class CreateAssignment extends React.Component<CreateAssignmentProps, CreateAssignmentState> {
     repoIsHttpsUrl: boolean;
+    descriptionTextArea: HTMLTextAreaElement | null;
     constructor(props: CreateAssignmentProps) {
         super(props);
+        this.descriptionTextArea = null;
         this.repoIsHttpsUrl = false;
         this.state = {
             assignmentName: "",
             repository: "",
             assignmentDescription: ""
         };
+    }
+
+    componentDidMount() {
+        if (this.descriptionTextArea) {
+            this.descriptionTextArea.focus();
+            autosize(this.descriptionTextArea);
+        }
     }
 
     render() {
@@ -44,7 +54,7 @@ class CreateAssignment extends React.Component<CreateAssignmentProps, CreateAssi
                     </div>
                     <div className="assignment-input">
                         <label className="label">Assignment description</label>
-                        <input className="input" name="assignmentDescription" placeholder="Assignment description" onChange={this.onChangeAssignmentDescription} value={this.state.assignmentDescription} />
+                        <textarea className="input" ref={this.setTextAreaRef} name="assignmentDescription" placeholder="Assignment description" onChange={this.onChangeAssignmentDescription} value={this.state.assignmentDescription} />
                     </div>
                     <button onClick={this.onClickSubmit}>Create Assignment</button>
                 </form>
@@ -72,7 +82,11 @@ class CreateAssignment extends React.Component<CreateAssignmentProps, CreateAssi
         });
     };
 
-    onChangeAssignmentDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTextAreaRef = (textAreaElement: HTMLTextAreaElement | null) => {
+        this.descriptionTextArea = textAreaElement;
+    };
+
+    onChangeAssignmentDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         this.setState({
             assignmentDescription: event.currentTarget.value
         });
