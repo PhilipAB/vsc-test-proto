@@ -11,3 +11,48 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* react-table styles */
+table {
+  background-color: transparent;
+  border-bottom-color: var(--vscode-editor-foreground);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-collapse: collapse;
+  border-spacing: 0px;
+  font-size: 15pt;
+  margin-top: 10px;
+}
+thead {
+  vertical-align: bottom;
+}
+tr,
+th,
+td {
+  text-align: center;
+  vertical-align: middle;
+  line-height: normal;
+  white-space: normal;
+  padding: 5px;
+  width: inherit;
+  max-width: none;
+  border: none;
+}
+th {
+  font-weight: bold;
+  border-color: var(--vscode-editor-foreground);
+  border-style: solid;
+  border-width: 1px;
+}
+tbody tr:nth-child(even) {
+  /* Change default background color for even rows. */
+  background: var(--override-background, var(--vscode-editor-background)); 
+}
+tbody tr:hover {
+  background: var(--override-selection-background, var(--vscode-editor-selectionBackground));
+}
+.sort-down, 
+.sort-up {
+  fill: var(--vscode-foreground);
+  width: 16px;
+  height: 12px;
+}
