@@ -320,7 +320,6 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
     }
 
     private checkProperties(data: any[]): boolean {
-        console.log(data);
         return data[0].hasOwnProperty('course_id') &&
             data[0].hasOwnProperty('name') &&
             data[0].hasOwnProperty('hidden') &&

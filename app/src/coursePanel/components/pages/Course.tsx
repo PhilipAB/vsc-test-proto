@@ -267,7 +267,6 @@ export default class Course extends React.Component<CourseProps, CourseState> {
             },
             body: JSON.stringify({ name: this.state.name })
         }).then(response => {
-            console.log(response);
             if (response.status === 200) {
                 vscode.postMessage({ type: 'onInfo', value: `Updated course name from ${this.title} to ${this.state.name}!` });
                 this.title = this.state.name;
