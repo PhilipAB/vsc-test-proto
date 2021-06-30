@@ -185,7 +185,7 @@ class Assignment extends React.Component<AssignmentProps, AssignmentState> {
                                 disableCalendar={true}
                                 disableClock={true}
                                 showLeadingZeros={true}
-                                format={"dd.MM.y hh:mm"}
+                                format={"dd.MM.y HH:mm"}
                                 minDate={new Date()}
                                 maxDate={new Date(9999, 11, 31, 23, 59, 59, 0)}
                                 className="react-datetime-picker"
@@ -201,7 +201,7 @@ class Assignment extends React.Component<AssignmentProps, AssignmentState> {
                                 disableCalendar={true}
                                 disableClock={true}
                                 showLeadingZeros={true}
-                                format={"dd.MM.y hh:mm"}
+                                format={"dd.MM.y HH:mm"}
                                 minDate={new Date()}
                                 maxDate={new Date(9999, 11, 31, 23, 59, 59, 0)}
                                 className="react-datetime-picker"
@@ -304,7 +304,7 @@ class Assignment extends React.Component<AssignmentProps, AssignmentState> {
                                 disableCalendar={true}
                                 disableClock={true}
                                 showLeadingZeros={true}
-                                format={"dd.MM.y hh:mm"}
+                                format={"dd.MM.y HH:mm"}
                                 minDate={new Date()}
                                 maxDate={new Date(9999, 11, 31, 23, 59, 59, 0)}
                                 className="react-datetime-picker"
@@ -320,7 +320,7 @@ class Assignment extends React.Component<AssignmentProps, AssignmentState> {
                                 disableCalendar={true}
                                 disableClock={true}
                                 showLeadingZeros={true}
-                                format={"dd.MM.y hh:mm"}
+                                format={"dd.MM.y HH:mm"}
                                 minDate={new Date()}
                                 maxDate={new Date(9999, 11, 31, 23, 59, 59, 0)}
                                 className="react-datetime-picker"
