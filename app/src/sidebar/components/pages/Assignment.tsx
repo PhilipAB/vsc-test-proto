@@ -418,8 +418,8 @@ class Assignment extends React.Component<AssignmentProps, AssignmentState> {
     };
 
     onClickHandleAddToCourses = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.preventDefault();
         if (this.state.selectedAddOption) {
-            event.preventDefault();
             try {
                 await fetch(`${apiBaseUrl}/assignments/assignment/${this.props.match.params.id}/course/${this.state.selectedAddOption.id}`, {
                     method: 'POST',
@@ -451,8 +451,8 @@ class Assignment extends React.Component<AssignmentProps, AssignmentState> {
     };
 
     onClickHandleUpdateCourses = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.preventDefault();
         if (this.state.selectedUpdateOption) {
-            event.preventDefault();
             try {
                 await fetch(`${apiBaseUrl}/assignments/assignment/${this.props.match.params.id}/course/${this.state.selectedUpdateOption.id}`, {
                     method: 'PUT',
