@@ -12,9 +12,32 @@ import { SimpleCourse } from '../../../models/Course';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const CourseTable = (props: { courseArray: SimpleCourse[], assignmentId: number, accessToken: string }) => {
     const cColumns = useMemo(() => courseColumns, []);
-    const [cData, setData] = useState(useMemo(() => props.courseArray, props.courseArray));
+    const [cData, setData] = useState(props.courseArray);
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const defaultColumnFilter = useMemo(() => ({ Filter: ColumnFilter }), []);
+
+    const removeAssignmentFromCourse = () => {
+        selectedFlatRows.forEach(async (row: Row<SimpleCourse>) => {
+            await fetch(`${apiBaseUrl}/courses/course/${row.original.id}/assignment/${props.assignmentId}`, {
+                method: 'DELETE',
+                // Auth header not required yet to fetch courses from api. 
+                // Still included to prevent errors in case of future api updates.    
+                headers: {
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    'Authorization': `Bearer ${props.accessToken}`,
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    'Accept': 'application/json',
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (response.status !== 200) {
+                    vscode.postMessage({ type: 'onError', value: `Could not delete assignment(s) from course!` });
+                }
+            });
+        });
+        setData(rows.filter(row => !selectedFlatRows.includes(row)).map(row => row.original));
+    };
 
     const courseTable: TableInstance<SimpleCourse> = useTable({
         columns: cColumns,
@@ -59,6 +82,7 @@ export const CourseTable = (props: { courseArray: SimpleCourse[], assignmentId: 
         prepareRow,
         selectedFlatRows,
         page, // Instead of using 'rows', we'll use page, which has only the rows for the active page
+        rows,
         canPreviousPage,
         canNextPage,
         pageOptions,
@@ -71,31 +95,6 @@ export const CourseTable = (props: { courseArray: SimpleCourse[], assignmentId: 
 
     const stopPropagationFromFilter = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         event.stopPropagation();
-    };
-
-    const removeAssignmentFromCourse = () => {
-        selectedFlatRows.forEach(async (row: Row<SimpleCourse>) => {
-            await fetch(`${apiBaseUrl}/courses/course/${row.original.id}/assignment/${props.assignmentId}`, {
-                method: 'DELETE',
-                // Auth header not required yet to fetch courses from api. 
-                // Still included to prevent errors in case of future api updates.    
-                headers: {
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
-                    'Authorization': `Bearer ${props.accessToken}`,
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
-                    'Accept': 'application/json',
-                    // eslint-disable-next-line @typescript-eslint/naming-convention
-                    'Content-Type': 'application/json'
-                }
-            }).then(response => {
-                if (response.status === 200) {
-                    // Remove row from table
-                    const tempData = [...cData];
-                    tempData.splice(row.index, 1);
-                    setData(tempData);
-                }
-            });
-        });
     };
 
     if (cData.length !== 0) {
@@ -170,7 +169,7 @@ export const CourseTable = (props: { courseArray: SimpleCourse[], assignmentId: 
                         {">>"}
                     </button>{" "}
                 </div>
-                <button className="button-update-related-courses" onClick={removeAssignmentFromCourse}>Remove selected assignments from course</button>
+                <button className="button-update-related-courses" onClick={removeAssignmentFromCourse}>Remove selected assignment from course(s)</button>
             </div>
         );
     } else {
