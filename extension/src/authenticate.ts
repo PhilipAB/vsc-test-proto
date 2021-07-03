@@ -10,6 +10,9 @@ export const authenticate = async (sidebarWebview: vscode.Webview | undefined) =
     const app: Polka = polka();
     let PORT: number = 37658;
 
+    // Work inspired by https://github.com/benawad/vsinder/blob/master/packages/extension/src/authenticate.ts
+    // Licensed under under Apache-2.0 https://www.apache.org/licenses/LICENSE-2.0
+    // Original license https://github.com/benawad/vsinder/blob/master/LICENSE
     app.get('/authenticate', async (req: Request, res: Response) => {
         const accessToken = req.query.access;
         const refreshToken = req.query.refresh;
