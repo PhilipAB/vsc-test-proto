@@ -9,7 +9,11 @@ import CodiconsSync from "../../../svg/CodiconsSync";
 import CodiconsEdit from "../../../svg/CodiconsEdit";
 import CodiconsCheck from "../../../svg/CodiconsCheck";
 import CodiconsClose from "../../../svg/CodiconsClose";
+import CodiconsRemove from "../../../svg/CodiconsRemove";
 import './Course.css';
+import { snakeToCamelCase } from "../../../sidebar/helpers/snakeToCamelCase";
+import { isAssignmentExtendedArray } from "../../../predicates/isAssignmentExtendedArray";
+import { AssignmentExtended } from "../../../models/AssignmentExtended";
 
 export interface CourseProps {
 }
@@ -18,11 +22,13 @@ export interface CourseState {
     loading: boolean
     authorized: boolean
     userData: UserCourseRole[]
+    assignmentData: AssignmentExtended[]
     showUserData: boolean
     name: string
     description: string | null
     disableTitleEdit: boolean
     disableDescriptionEdit: boolean
+    disableDeleteButton: boolean
 }
 
 export default class Course extends React.Component<CourseProps, CourseState> {
@@ -39,11 +45,13 @@ export default class Course extends React.Component<CourseProps, CourseState> {
             loading: false,
             authorized: false,
             userData: [],
+            assignmentData: [],
             showUserData: false,
             name: courseName,
             description: courseDescription || null,
             disableTitleEdit: true,
-            disableDescriptionEdit: true
+            disableDescriptionEdit: true,
+            disableDeleteButton: false
         };
         this.descriptionTextArea = null;
 
@@ -71,10 +79,10 @@ export default class Course extends React.Component<CourseProps, CourseState> {
             }
         }).then(response => response.json())
             .then(async data => {
-                // ToDo: Type Check
                 if (Array.isArray(data) && data.length > 0) {
                     this.role = data[0].role;
                     await this.updateLastVisited();
+                    await this.setAssignmentData(this.role);
                     this.setState({
                         name: data[0].name,
                         description: data[0].description,
@@ -124,7 +132,111 @@ export default class Course extends React.Component<CourseProps, CourseState> {
         } else {
             return <></>;
         }
+    };
 
+    async setAssignmentData(role: "CourseAdmin" | "Teacher" | "Student" | "") {
+        if (role === "CourseAdmin" || role === "Teacher") {
+            await fetch(`${apiBaseUrl}/courses/course/${this.id.toString()}/assignments`, {
+                method: 'GET',
+                headers: {
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    'Authorization': `Bearer ${this.accessToken}`,
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        snakeToCamelCase(data);
+                        if (isAssignmentExtendedArray(data)) {
+                            this.setState({
+                                assignmentData: data
+                            });
+                        }
+                    }
+                });
+        } else {
+            await fetch(`${apiBaseUrl}/courses/course/${this.id.toString()}/assignments/visible`, {
+                method: 'GET',
+                headers: {
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    'Authorization': `Bearer ${this.accessToken}`,
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        snakeToCamelCase(data);
+                        if (isAssignmentExtendedArray(data)) {
+                            this.setState({
+                                assignmentData: data
+                            });
+                        }
+                    }
+                });
+        }
+    }
+
+    renderAssignments = () => {
+        return (
+            <div className="assignments-in-course">
+                <h3>Assignments</h3>
+                <ul className="course-assignments-list">
+                    {this.state.assignmentData.map((assignment: AssignmentExtended) => {
+                        return (
+                            <li className="assignment" key={assignment.id}>
+                                <span className="assignments-details-container">
+                                    <details className="assignment-details">
+                                        <summary onClick={this.onClickSummary}>{assignment.name}</summary>
+                                        <pre>
+                                            {assignment.description}
+                                        </pre>
+                                        <p className="date-from">
+                                            {console.log(assignment)}
+                                            {assignment.visibleFrom ? 'Assignment available from: ' +
+                                                // Prefix 0 if single digit day.
+                                                `${this.localDate(assignment.visibleFrom).getDate.toString().length === 1 ? "0" : ""}` +
+                                                `${this.localDate(assignment.visibleFrom).getDate().toString()}.` +
+                                                // Prefix 0 if single digit month.
+                                                `${(this.localDate(assignment.visibleFrom).getMonth() + 1).toString().length === 1 ? "0" : ""}` +
+                                                `${(this.localDate(assignment.visibleFrom).getMonth() + 1).toString()}.` +
+                                                `${this.localDate(assignment.visibleFrom).getFullYear()} ` +
+                                                // Prefix 0 if single digit hour.
+                                                `${this.localDate(assignment.visibleFrom).getHours().toString().length === 1 ? "0" : ""}` +
+                                                `${this.localDate(assignment.visibleFrom).getHours().toString()}:` +
+                                                // Prefix 0 if single digit minute.
+                                                `${this.localDate(assignment.visibleFrom).getMinutes().toString().length === 1 ? "0" : ""}` +
+                                                `${this.localDate(assignment.visibleFrom).getMinutes().toString()}`
+                                                : ""}
+                                        </p>
+                                        <p className="date-from">
+                                            {assignment.visibleTill ? 'Assignment available till: ' +
+                                                // Prefix 0 if single digit day.
+                                                `${this.localDate(assignment.visibleTill).getDate().toString().length === 1 ? "0" : ""}` +
+                                                `${this.localDate(assignment.visibleTill).getDate()}.` +
+                                                // Prefix 0 if single digit month.
+                                                `${(this.localDate(assignment.visibleTill).getMonth() + 1).toString().length === 1 ? "0" : ""}` +
+                                                `${this.localDate(assignment.visibleTill).getMonth() + 1}.` +
+                                                `${this.localDate(assignment.visibleTill).getFullYear()} ` +
+                                                // Prefix 0 if single digit hour.
+                                                `${this.localDate(assignment.visibleTill).getHours().toString().length === 1 ? "0" : ""}` +
+                                                `${this.localDate(assignment.visibleTill).getHours()}:` +
+                                                // Prefix 0 if single digit minute.
+                                                `${this.localDate(assignment.visibleTill).getMinutes().toString().length === 1 ? "0" : ""}` +
+                                                `${this.localDate(assignment.visibleTill).getMinutes()}`
+                                                : ""}
+                                        </p>
+                                        <button className="clone-assignment" value={assignment.repository} onClick={this.onClickCloneButton}>
+                                            Clone this assignment
+                                        </button>
+                                    </details>
+                                    <button className={this.state.disableDeleteButton ? "assignment-delete-button" : "assignment-delete-button active"} value={assignment.id} onClick={this.onClickDelete}>
+                                        <CodiconsRemove className="delete-button-icon"></CodiconsRemove>
+                                    </button>
+                                </span>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
+        );
     };
 
     render() {
@@ -152,7 +264,10 @@ export default class Course extends React.Component<CourseProps, CourseState> {
                 {this.state.loading ? (
                     <CodiconsSync className="loading-loop"></CodiconsSync>
                 ) : (this.state.authorized ? (
-                    this.renderCoursePage()
+                    <>
+                        {this.renderAssignments()}
+                        {this.renderCoursePage()}
+                    </>
                 ) : (
                     <form>
                         <div className="course-password">
@@ -168,6 +283,52 @@ export default class Course extends React.Component<CourseProps, CourseState> {
 
     setTextAreaRef = (textAreaElement: HTMLTextAreaElement | null) => {
         this.descriptionTextArea = textAreaElement;
+    };
+
+    // Converts a mysql string to local Date object.
+    localDate(date: string): Date {
+        return new Date(date);
+    }
+
+    onClickDelete = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        const assignmentId = event.currentTarget.value;
+        await fetch(`${apiBaseUrl}/courses/course/${this.id}/assignment/${assignmentId}`, {
+            method: 'DELETE',
+            // Auth header not required yet to fetch courses from api. 
+            // Still included to prevent errors in case of future api updates.    
+            headers: {
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                'Authorization': `Bearer ${this.accessToken}`,
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                'Accept': 'application/json',
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.status !== 200) {
+                vscode.postMessage({ type: 'onError', value: `Could not delete assignment(s) from course!` });
+            } else {
+                // remove assignment from course
+                let tempAssignmentData: AssignmentExtended[] = [...this.state.assignmentData];
+                tempAssignmentData = tempAssignmentData.filter(assignment => assignment.id !== Number(assignmentId));
+                this.setState({
+                    assignmentData: tempAssignmentData
+                });
+            }
+        });
+    };
+
+    onClickSummary = () => {
+        this.setState(prevState => ({
+            disableDeleteButton: !prevState.disableDeleteButton
+        }));
+    };
+
+    onClickCloneButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        vscode.postMessage({
+            type: "cloneRepository",
+            value: event.currentTarget.value
+        });
     };
 
     onClickSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -190,7 +351,6 @@ export default class Course extends React.Component<CourseProps, CourseState> {
                 if (response.status === 201) {
                     vscode.postMessage({ type: 'onInfo', value: `Signed up for course "${this.state.name}" successfully!` });
                     const res = await response.json();
-                    // (ToDo: Type Check)
                     this.role = res.role;
                     this.setState({
                         authorized: true

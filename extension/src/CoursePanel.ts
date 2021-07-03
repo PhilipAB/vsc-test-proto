@@ -101,6 +101,13 @@ export class CoursePanel {
           vscode.window.showErrorMessage(data.value);
           break;
         }
+        case "cloneRepository": {
+          if (!data.value) {
+            return;
+          }
+          vscode.commands.executeCommand('git.clone', data.value);
+          break;
+        }
       }
     });
   }

@@ -464,7 +464,7 @@ class Assignment extends React.Component<AssignmentProps, AssignmentState> {
                         // eslint-disable-next-line @typescript-eslint/naming-convention
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ visibleFrom: this.state.updateVisibleTill, visibleTill: this.state.updateVisibleTill })
+                    body: JSON.stringify({ visibleFrom: this.state.updateVisibleFrom, visibleTill: this.state.updateVisibleTill })
                 }).then(response => {
                     if (response.status === 200) {
                         vscode.postMessage({ type: 'onInfo', value: `Updated successfully!` });

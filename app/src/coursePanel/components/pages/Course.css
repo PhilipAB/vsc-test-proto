@@ -14,12 +14,14 @@
     z-index: 1;
     font-size: 15pt;
 }
+
 .course-title-wrapper {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .course-description-container {
     margin: 10px;
     background-color: var(--vscode-menu-background);
@@ -32,10 +34,12 @@
     z-index: 1;
     font-size: 15pt;
 }
+
 .course-detail-header {
     display: inline-flex;
     font-weight: bolder;
 }
+
 .course-detail-header-editable {
     display: inline-flex !important;
     width: auto !important;
@@ -43,9 +47,11 @@
     margin-bottom: 10px;
     border: 1px solid var(--vscode-focusBorder) !important;
 }
+
 .course-edit, .course-check, .course-close {
     display: none;
 }
+
 .course-edit.show, .course-check.show, .course-close.show {
     display: inline-flex;
     width: 24px;
@@ -56,38 +62,97 @@
     fill: var(--vscode-activityBar-foreground);
     margin-left: 10px;
 }
+
 .course-edit.show:hover, .course-check.show:hover, .course-close.show:hover {
     fill: var(--vscode-activityBar-foreground);
 }
+
 .course-description-header {
     display: inline-flex;
 }
+
 .course-description {
     margin-bottom: 10px;
     background-color: var(--vscode-menu-background) !important;
 }
+
 .course-description.active {
     border: 2px solid var(--vscode-focusBorder) !important;
 }
+
 .course-password .input {
     background-color: var(--vscode-input-background);
     color: var(--vscode-input-foreground);
     border-color: var(--vscode-input-background);
     border-radius: 2px;
 }
+
 .course-password {
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
 }
+
 .course-signup-button, .participants-button {
     max-width: 200px;
 }
+
 .loading-loop {
     animation: loading-spinner infinite 4s linear;
     width: 48px;
     height: 48px;
     fill: var(--vscode-activityBar-inactiveForeground);
+}
+
+.assignments-in-course {
+    width: 100%;
+}
+
+.assignments-details-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.assignment-details {
+    display: inline-flex;
+    width: fit-content;
+    margin-right: 10px;
+}
+
+.assignment-details[open] {
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+}
+
+.assignment-delete-button {
+    display: none;
+}
+
+.assignment-delete-button.active {
+    display: inline-flex;
+    width: fit-content;
+    height: fit-content;
+}
+
+.delete-button-icon {
+    fill: var(--vscode-button-foreground);
+    height: 12px;
+    width: 12px;
+}
+
+.clone-assignment {
+    max-width: 200px;
+    margin-bottom: 10px;
+}
+
+.date-from {
+    margin-top: 10px;
+
+}
+
+.date-till {
+    margin-bottom: 10px;
 }
 
 @keyframes loading-spinner {

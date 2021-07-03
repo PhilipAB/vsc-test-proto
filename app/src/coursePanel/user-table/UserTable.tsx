@@ -11,7 +11,6 @@ import { userColumns } from './userColumns';
 import './UserTable.css';
 import { isJwtPayloadWithExp } from '../../predicates/isJwtPayloadWithExp';
 
-// ToDo: Load user data in this file instead of Course.tsx
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const UserTable = (props: { userArray: UserCourseRole[], courseId: number, accessToken: string }) => {
     const uColumns = useMemo(() => userColumns, []);
@@ -87,7 +86,7 @@ export const UserTable = (props: { userArray: UserCourseRole[], courseId: number
                         // The header can use the table's getToggleAllRowsSelectedProps to render a checkbox.
                         // However this results in also selecting disabled checkboxes.
                         // Therefore I implemented a workaround and posted the solution on:
-                        // https://github.com/tannerlinsley/react-table/issues/2988
+                        // https://github.com/tannerlinsley/react-table/issues/2988#issuecomment-861506888
                         // eslint-disable-next-line @typescript-eslint/naming-convention
                         Header: ({ toggleRowSelected, rows, selectedFlatRows }) => {
                             const style = {
