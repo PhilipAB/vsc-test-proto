@@ -1,17 +1,21 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+ul {
+  /* Remove the dots from listed items */
+  list-style-type: none;
+}
+
 /* react-table styles */
+
 table {
   background-color: transparent;
   border-bottom-color: var(--vscode-editor-foreground);
@@ -22,12 +26,12 @@ table {
   font-size: 15pt;
   margin-top: 10px;
 }
+
 thead {
   vertical-align: bottom;
 }
-tr,
-th,
-td {
+
+tr, th, td {
   text-align: center;
   vertical-align: middle;
   line-height: normal;
@@ -37,21 +41,24 @@ td {
   max-width: none;
   border: none;
 }
+
 th {
   font-weight: bold;
   border-color: var(--vscode-editor-foreground);
   border-style: solid;
   border-width: 1px;
 }
+
 tbody tr:nth-child(even) {
   /* Change default background color for even rows. */
-  background: var(--override-background, var(--vscode-editor-background)); 
+  background: var(--override-background, var(--vscode-editor-background));
 }
+
 tbody tr:hover {
   background: var(--override-selection-background, var(--vscode-editor-selectionBackground));
 }
-.sort-down, 
-.sort-up {
+
+.sort-down, .sort-up {
   fill: var(--vscode-foreground);
   width: 16px;
   height: 12px;
