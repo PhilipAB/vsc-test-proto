@@ -175,6 +175,8 @@ export const UserTable = (props: { userArray: UserCourseRole[], courseId: number
                     } else {
                         vscode.postMessage({ type: 'onInfo', value: `Failed to update role property from user ${row.original.name}!` });
                     }
+                }).catch(_reason => {
+                    vscode.postMessage({ type: 'onError', value: `Failed to reach backend!` });       
                 });
             });
         };

@@ -358,6 +358,8 @@ export default class Course extends React.Component<CourseProps, CourseState> {
                 } else {
                     vscode.postMessage({ type: 'onInfo', value: `Failed to sign up for course!` });
                 }
+            }).catch(_reason => {
+                vscode.postMessage({ type: 'onError', value: `Failed to reach backend!` });
             });
         }
     };

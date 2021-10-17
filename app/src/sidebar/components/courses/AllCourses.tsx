@@ -72,7 +72,7 @@ export default class AllCourses extends React.Component<AllCoursesProps, AllCour
             }
             return (
                 <div className="card-container">
-                    <SearchBar searchTerm={this.state.searchTerm} changeFunction={this.handleSearchEdit}></SearchBar>
+                    <SearchBar searchTerm={this.state.searchTerm} placeHolder={"Search course"} changeFunction={this.handleSearchEdit}></SearchBar>
                     <ul className="course-list">
                         {currentCourses.map((course: Course) => {
                             return (

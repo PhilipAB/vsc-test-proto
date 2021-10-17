@@ -100,7 +100,7 @@ export default class MyCourses extends React.Component<MyCoursesProps, MyCourses
                             handleLastVisited={this.handleSortByLastVisited}
                             handleSortButtonClick={this.handleSortButtonClicked}>
                         </Sort>
-                        <SearchBar searchTerm={this.state.searchTerm} changeFunction={this.handleSearchEdit}></SearchBar>
+                        <SearchBar searchTerm={this.state.searchTerm} placeHolder={"Search course"} changeFunction={this.handleSearchEdit}></SearchBar>
                         <Filter
                             showFilterMenu={this.state.filterActive}
                             showHidden={this.state.showHidden}

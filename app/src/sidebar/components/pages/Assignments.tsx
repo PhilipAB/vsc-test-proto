@@ -75,7 +75,7 @@ class Assignments extends React.Component<AssignmentsProps, AssignmentsState> {
             }
             return (
                 <div className="assignments-card-container">
-                    <SearchBar searchTerm={this.state.searchTerm} changeFunction={this.handleSearchEdit}></SearchBar>
+                    <SearchBar searchTerm={this.state.searchTerm} placeHolder={"Search assignment"} changeFunction={this.handleSearchEdit}></SearchBar>
                     <ul className="assignments-list">
                         {currentAssignments.map((assignment: Assignment) => {
                             return (

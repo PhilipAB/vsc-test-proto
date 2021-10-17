@@ -3,6 +3,7 @@ import './SearchBar.css';
 
 export interface SearchBarProps {
     searchTerm: string,
+    placeHolder: string,
     changeFunction: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -16,7 +17,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
                 className="search-bar"
                 key="random1"
                 value={this.props.searchTerm}
-                placeholder={"Search course"}
+                placeholder={this.props.placeHolder}
                 onChange={this.props.changeFunction}
             />
         );
