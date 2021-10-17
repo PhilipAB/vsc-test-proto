@@ -97,6 +97,11 @@
     max-width: 200px;
 }
 
+.statistics-button {
+    margin-top: 10px;
+    max-width: 200px;
+}
+
 .loading-loop {
     animation: loading-spinner infinite 4s linear;
     width: 48px;

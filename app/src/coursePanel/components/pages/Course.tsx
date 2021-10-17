@@ -24,6 +24,9 @@ export interface CourseState {
     userData: UserCourseRole[]
     assignmentData: AssignmentExtended[]
     showUserData: boolean
+    showStatistics: boolean
+    numberVisitors: number
+    totalVisits: number
     name: string
     description: string | null
     disableTitleEdit: boolean
@@ -47,6 +50,9 @@ export default class Course extends React.Component<CourseProps, CourseState> {
             userData: [],
             assignmentData: [],
             showUserData: false,
+            showStatistics: false,
+            numberVisitors: 0,
+            totalVisits: 0,
             name: courseName,
             description: courseDescription || null,
             disableTitleEdit: true,
@@ -83,6 +89,7 @@ export default class Course extends React.Component<CourseProps, CourseState> {
                     this.role = data[0].role;
                     await this.updateLastVisited();
                     await this.setAssignmentData(this.role);
+                    await this.increaseTotalCourseAccess();
                     this.setState({
                         name: data[0].name,
                         description: data[0].description,
@@ -113,6 +120,23 @@ export default class Course extends React.Component<CourseProps, CourseState> {
         });
     };
 
+    increaseTotalCourseAccess = () => {
+        return fetch(`${apiBaseUrl}/courses/accessed`, {
+            method: 'POST',
+            // Auth header not required yet to fetch courses from api. 
+            // Still included to prevent errors in case of future api updates.    
+            headers: {
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                'Authorization': `Bearer ${this.accessToken}`,
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                'Accept': 'application/json',
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: this.id })
+        });
+    };
+
     isTeacherOrAdmin = () => {
         return this.role === "CourseAdmin" || this.role === "Teacher";
     };
@@ -128,6 +152,23 @@ export default class Course extends React.Component<CourseProps, CourseState> {
                 );
             } else {
                 return <button className="participants-button" onClick={this.onClickUserDataButton}>Show participants</button>;
+            }
+        } else {
+            return <></>;
+        }
+    };
+
+    renderStatistics = () => {
+        if (this.isTeacherOrAdmin()) {
+            if (this.state.showStatistics) {
+                return (
+                    <>
+                        <button className="statistics-button" onClick={this.onClickStatisticsButton}>Hide statistics</button>
+                        <div>Your course was visited {this.state.totalVisits} times by {this.state.numberVisitors} different participants during the last 7 days!</div>
+                    </>
+                );
+            } else {
+                return <button className="statistics-button" onClick={this.onClickStatisticsButton}>Show statistics</button>;
             }
         } else {
             return <></>;
@@ -267,6 +308,7 @@ export default class Course extends React.Component<CourseProps, CourseState> {
                     <>
                         {this.renderAssignments()}
                         {this.renderCoursePage()}
+                        {this.renderStatistics()}
                     </>
                 ) : (
                     <form>
@@ -386,6 +428,45 @@ export default class Course extends React.Component<CourseProps, CourseState> {
         } else {
             this.setState({
                 showUserData: false
+            });
+        }
+
+    };
+
+    onClickStatisticsButton = async () => {
+        if (!this.state.showStatistics) {
+            await fetch(`${apiBaseUrl}/courses/accessed/${this.id.toString()}`, {
+                method: 'GET',
+                headers: {
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    'Authorization': `Bearer ${this.accessToken}`,
+                }
+            }).then(response => response.json())
+                .then(data  => {
+                    console.log("visitors: ", data);
+                    this.setState({
+                        numberVisitors: data[0]["COUNT(*)"]
+                    });
+                });
+            await fetch(`${apiBaseUrl}/courses/accessed/total/${this.id.toString()}`, {
+                method: 'GET',
+                headers: {
+                    // eslint-disable-next-line @typescript-eslint/naming-convention
+                    'Authorization': `Bearer ${this.accessToken}`,
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    console.log("total: ", data);
+                    this.setState({
+                        totalVisits: data[0]["COUNT(*)"]
+                    });
+                });
+            this.setState({
+                showStatistics: true
+            });
+        } else {
+            this.setState({
+                showStatistics: false
             });
         }
 
